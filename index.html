@@ -458,7 +458,7 @@
             showPopup(data.message || 'Không thể gửi.', true);
           }
         } catch (e) {
-          showPopup('Lỗi gửi yêu cầu.', true);
+          showPopup('Incorrect key.', true);
         } finally {
           btnSubmit.disabled = false;
           btnSubmit.classList.remove('loading');
