@@ -1,2983 +1,499 @@
-<!DOCTYPE html>
-<html lang="vi"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Kích Hoạt Key — ProxyVipFF</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#06060f;--card:#0d0d1a;--border:rgba(139,92,246,.15);
-  --accent:#8b5cf6;--accent2:#6366f1;--text:#f0f0ff;--muted:#5a5a7a;
-  --green:#22d3a0;--yellow:#f59e0b;--red:#f87171;--blue:#60a5fa;
-}
-body{
-  background:var(--bg);color:var(--text);
-  font-family:'Inter',sans-serif;min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;overflow-x:hidden;
-}
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>🌸 FF PROXY</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+    body {
+      background: linear-gradient(145deg, #fce4ec, #f8e8ff, #e8f5e9);
+      font-family: 'Quicksand', 'Segoe UI', sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    /* Floating cute shapes */
+    .cute-bg {
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .cute-bg .bubble {
+      position:absolute;
+      border-radius:50%;
+      opacity:0.15;
+      animation: floatBubble 12s infinite ease-in-out;
+    }
+    .bubble:nth-child(1) { width:180px; height:180px; background:#ffb3c6; top:-30px; left:-40px; animation-delay:0s; }
+    .bubble:nth-child(2) { width:140px; height:140px; background:#b8e0d2; bottom:-20px; right:-30px; animation-delay:-3s; }
+    .bubble:nth-child(3) { width:100px; height:100px; background:#d4b8e0; top:40%; right:10%; animation-delay:-6s; }
+    .bubble:nth-child(4) { width:70px; height:70px; background:#f9e6b3; bottom:20%; left:5%; animation-delay:-9s; }
+    .bubble:nth-child(5) { width:50px; height:50px; background:#ffb3b3; top:15%; right:20%; animation-delay:-2s; }
 
-/* Ambient blobs */
-.blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
-.blob1{width:400px;height:400px;background:rgba(139,92,246,.12);top:-100px;right:-100px}
-.blob2{width:300px;height:300px;background:rgba(99,102,241,.1);bottom:-80px;left:-80px}
+    @keyframes floatBubble {
+      0%,100% { transform:translate(0,0) scale(1) rotate(0deg); }
+      25% { transform:translate(30px,-40px) scale(1.05) rotate(5deg); }
+      50% { transform:translate(-20px,-20px) scale(0.95) rotate(-5deg); }
+      75% { transform:translate(20px,30px) scale(1.02) rotate(3deg); }
+    }
 
-.wrap{width:100%;max-width:440px;position:relative;z-index:1}
+    .container {
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:460px;
+      background:rgba(255,255,255,0.75);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-radius:32px;
+      padding:28px 24px;
+      box-shadow: 0 20px 60px rgba(255,105,135,0.15), 0 8px 24px rgba(0,0,0,0.04);
+      border:1px solid rgba(255,255,255,0.5);
+    }
 
-/* ── LOGO ── */
-.logo{
-  text-align:center;margin-bottom:28px;
-  width:100vw;position:relative;left:50%;transform:translateX(-50%);
-}
-.logo-badge{
-  display:inline-flex;align-items:center;gap:10px;
-  background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);
-  border-radius:50px;padding:8px 20px 8px 10px;margin-bottom:18px;
-}
-.logo-badge svg{width:32px;height:32px}
-.logo-badge-text{
-  font-size:clamp(2.2rem,9vw,4.5rem);font-weight:900;letter-spacing:2px;text-transform:uppercase;
-  font-style:italic;display:block;line-height:1;white-space:nowrap;
-  background:linear-gradient(90deg,#e9d5ff,#a78bfa,#60a5fa,#c4b5fd,#e9d5ff);
-  background-size:250% auto;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:shine-text 2s linear infinite, lightning 3.5s ease-in-out infinite;
-  filter:drop-shadow(0 0 12px rgba(167,139,250,.5));
-}
-@keyframes shine-text{
-  0%{background-position:0% center}
-  100%{background-position:250% center}
-}
-@keyframes lightning{
-  0%,82%,100%{filter:drop-shadow(0 0 10px rgba(167,139,250,.5))}
-  83%{filter:drop-shadow(0 0 40px #e9d5ff) brightness(2.5)}
-  84%{filter:drop-shadow(0 0 8px rgba(167,139,250,.4)) brightness(1)}
-  86%{filter:drop-shadow(0 0 60px #c4b5fd) brightness(3.5)}
-  88%{filter:drop-shadow(0 0 8px rgba(167,139,250,.4)) brightness(1)}
-  89%{filter:drop-shadow(0 0 30px #a78bfa) brightness(2)}
-  90%{filter:drop-shadow(0 0 10px rgba(167,139,250,.5)) brightness(1)}
-}
-.logo-title{font-size:2rem;font-weight:900;letter-spacing:-1px;
-  background:linear-gradient(135deg,#c4b5fd 0%,#818cf8 50%,#60a5fa 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.logo-sub{font-size:.72rem;color:var(--muted);margin-top:6px;letter-spacing:2px;text-transform:uppercase}
-.online-badge{
-  display:inline-flex;align-items:center;gap:7px;margin-top:10px;
-  background:rgba(34,211,160,.07);border:1px solid rgba(34,211,160,.2);
-  border-radius:50px;padding:5px 14px;font-size:.75rem;font-weight:700;
-  color:#22d3a0;letter-spacing:.5px;text-transform:none;
-}
-.online-dot{
-  width:7px;height:7px;border-radius:50%;background:#22d3a0;flex-shrink:0;
-  box-shadow:0 0 0 0 rgba(34,211,160,.5);
-  animation:pulse-dot 2s infinite;
-}
-@keyframes pulse-dot{
-  0%{box-shadow:0 0 0 0 rgba(34,211,160,.5)}
-  70%{box-shadow:0 0 0 6px rgba(34,211,160,0)}
-  100%{box-shadow:0 0 0 0 rgba(34,211,160,0)}
-}
+    .header {
+      text-align:center;
+      margin-bottom:20px;
+    }
+    .header .emoji-big { font-size:52px; display:block; line-height:1.2; animation: wiggle 3s infinite ease-in-out; }
+    @keyframes wiggle {
+      0%,100% { transform:rotate(-3deg) scale(1); }
+      50% { transform:rotate(3deg) scale(1.05); }
+    }
+    .header .title {
+      font-size:26px;
+      font-weight:700;
+      color:#6a1b4d;
+      letter-spacing:1px;
+      margin-top:4px;
+    }
+    .header .title span { background:linear-gradient(135deg,#f06292,#ba68c8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header .sub {
+      font-size:14px;
+      color:#ad7a8b;
+      font-weight:600;
+      letter-spacing:0.5px;
+      margin-top:2px;
+    }
+    .header .sub span { color:#f06292; -webkit-text-fill-color:#f06292; }
 
-/* ── CARD ── */
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:28px;padding:28px;
-  box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 40px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
-  position:relative;
-}
-.card-glow{display:none}
-/* ── CAT EARS ── */
-.card-outer{position:relative}
-.cat-ear{
-  position:absolute;
-  width:46px;height:40px;
-  top:-38px;
-  background:#0d0d1a;
-  clip-path:polygon(14% 100%,0% 46%,50% 0%,100% 46%,86% 100%);
-  filter:drop-shadow(0 -1px 0 rgba(139,92,246,.45)) drop-shadow(-1px 0 0 rgba(139,92,246,.25)) drop-shadow(1px 0 0 rgba(139,92,246,.25));
-}
-.cat-ear-l{left:56px}
-.cat-ear-r{right:56px}
-.card-deco-left{position:absolute;left:-10px;top:-72px;width:90px;height:auto;pointer-events:none;z-index:2}
+    .divider {
+      width:60px;
+      height:3px;
+      background:linear-gradient(90deg,#f8bbd0,#ce93d8);
+      border-radius:4px;
+      margin:10px auto 16px;
+    }
 
-/* ── INFO CHIPS ── */
-.chips{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
-.chip{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:16px;padding:13px 14px;
-  transition:.2s;
-}
-.chip-lbl{
-  display:flex;align-items:center;gap:6px;
-  font-size:.6rem;color:var(--muted);font-weight:700;letter-spacing:1px;
-  text-transform:uppercase;margin-bottom:6px;
-}
-.chip-lbl svg{opacity:.5}
-.chip-val{
-  font-size:.76rem;color:var(--accent);
-  font-family:'Courier New',monospace;
-  word-break:break-all;line-height:1.4;font-weight:600;
-}
+    .info-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px 12px;
+      background:rgba(255,240,245,0.5);
+      border-radius:16px;
+      padding:12px 16px;
+      margin-bottom:14px;
+      border:1px solid rgba(255,182,193,0.3);
+    }
+    .info-grid .ig-label {
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+      color:#b07a8a;
+      font-weight:600;
+    }
+    .info-grid .ig-value {
+      font-weight:700;
+      color:#4a1a2e;
+      word-break:break-all;
+      font-size:12px;
+      background:rgba(255,255,255,0.3);
+      padding:2px 8px;
+      border-radius:20px;
+      display:inline-block;
+    }
 
-/* ── INPUT ── */
-.inp-wrap{margin-bottom:14px}
-.inp-lbl{
-  display:flex;align-items:center;gap:7px;
-  font-size:.68rem;color:var(--muted);font-weight:700;
-  letter-spacing:.8px;text-transform:uppercase;margin-bottom:9px;
-}
-.key-inp{
-  width:100%;padding:14px 16px;
-  background:rgba(255,255,255,.04);
-  border:1.5px solid rgba(255,255,255,.08);
-  border-radius:16px;color:var(--text);
-  font-size:.9rem;outline:none;font-family:'Inter',sans-serif;
-  letter-spacing:.5px;transition:.2s;
-}
-.key-inp:focus{border-color:rgba(139,92,246,.5);background:rgba(139,92,246,.06);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
-.key-inp::placeholder{color:#2a2a40}
+    .note-box {
+      background:rgba(255,215,215,0.25);
+      border-radius:12px;
+      padding:8px 14px;
+      margin-bottom:16px;
+      font-size:12px;
+      color:#7a4a5a;
+      border:1px dashed #f8bbd0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .note-box .icon { font-size:16px; }
 
-/* ── ACTIVATE BUTTON ── */
-.btn-act{
-  width:100%;padding:15px;
-  background:linear-gradient(135deg,#7c3aed,#4338ca);
-  border:none;border-radius:16px;color:#fff;font-size:.95rem;font-weight:800;
-  cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.3px;
-  transition:.2s;position:relative;overflow:hidden;
-  box-shadow:0 4px 20px rgba(124,58,237,.35), inset 0 1px 0 rgba(255,255,255,.15);
-}
-.btn-act::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);
-  pointer-events:none;
-}
-.btn-act:hover:not(:disabled){
-  background:linear-gradient(135deg,#8b5cf6,#4f46e5);
-  transform:translateY(-1px);box-shadow:0 8px 28px rgba(139,92,246,.45);
-}
-.btn-act:active:not(:disabled){transform:translateY(0)}
-.btn-act:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-act-inner{display:flex;align-items:center;justify-content:center;gap:8px}
+    .field {
+      margin-bottom:14px;
+    }
+    .field input {
+      width:100%;
+      padding:14px 18px;
+      background:rgba(255,255,255,0.7);
+      border:2px solid #f8bbd0;
+      border-radius:20px;
+      color:#3d1a2b;
+      font-size:15px;
+      font-family:'Quicksand',sans-serif;
+      outline:none;
+      transition:0.25s;
+      font-weight:600;
+    }
+    .field input:focus {
+      border-color:#ce93d8;
+      box-shadow:0 0 0 6px rgba(206,147,216,0.15);
+      background:#fff;
+    }
+    .field input::placeholder { color:#c9a0b0; font-weight:400; opacity:0.7; }
 
-/* ── HISTORY BUTTON ── */
-.hist-wrap{margin-top:14px}
-.hist-toggle{
-  width:100%;padding:11px 16px;
-  background:transparent;border:1.5px solid rgba(255,255,255,.07);
-  border-radius:14px;color:var(--muted);font-size:.82rem;font-weight:700;
-  cursor:pointer;font-family:'Inter',sans-serif;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:.2s;
-}
-.hist-toggle:hover{border-color:rgba(139,92,246,.3);color:var(--accent)}
-.hist-toggle-left{display:flex;align-items:center;gap:8px}
+    .row {
+      display:flex;
+      gap:10px;
+    }
+    .btn {
+      flex:1;
+      padding:14px;
+      border:none;
+      border-radius:24px;
+      font-size:15px;
+      font-weight:700;
+      font-family:'Quicksand',sans-serif;
+      cursor:pointer;
+      transition:0.2s;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      background:linear-gradient(135deg,#f06292,#ec407a);
+      color:#fff;
+      box-shadow:0 6px 20px rgba(236,64,122,0.25);
+    }
+    .btn:active { transform:scale(0.96); }
+    .btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+    .btn-clear {
+      min-width:50px;
+      flex:0 0 50px;
+      background:rgba(255,200,200,0.3);
+      color:#d46a7a;
+      box-shadow:none;
+      border:1px solid #f8bbd0;
+      font-size:18px;
+      padding:14px 0;
+    }
+    .btn-clear:hover { background:rgba(255,180,180,0.5); }
 
-/* ── HISTORY MODAL ── */
-.hist-modal{
-  position:fixed;inset:0;z-index:9999;
-  display:flex;align-items:flex-end;justify-content:center;
-  padding:0;
-  opacity:0;pointer-events:none;transition:opacity .25s;
-}
-.hist-modal.open{opacity:1;pointer-events:all}
-.hist-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px)}
-.hist-sheet{
-  position:relative;z-index:1;
-  width:100%;max-width:480px;
-  background:#0d0d1a;
-  border:1px solid rgba(139,92,246,.2);
-  border-bottom:none;
-  border-radius:24px 24px 0 0;
-  max-height:75vh;display:flex;flex-direction:column;
-  transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.1,.64,1);
-  box-shadow:0 -20px 60px rgba(0,0,0,.6);
-}
-.hist-modal.open .hist-sheet{transform:translateY(0)}
-.hist-sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin:12px auto 0}
-.hist-sheet-head{
-  padding:16px 20px 14px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;
-}
-.hist-sheet-title{font-size:.95rem;font-weight:800;display:flex;align-items:center;gap:8px}
-.hist-close{
-  width:30px;height:30px;border-radius:8px;
-  background:rgba(255,255,255,.06);border:none;
-  color:var(--muted);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:.15s;
-}
-.hist-close:hover{background:rgba(255,255,255,.1);color:var(--text)}
-.hist-body{overflow-y:auto;flex:1;padding:8px 0}
-.hist-body::-webkit-scrollbar{width:4px}
-.hist-body::-webkit-scrollbar-track{background:transparent}
-.hist-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-.hist-empty{padding:28px;text-align:center;color:var(--muted);font-size:.82rem}
-.hist-item{
-  padding:14px 16px;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:14px;
-  margin-bottom:10px;
-  background:transparent;
-}
-.hist-item:last-child{margin-bottom:0}
-.hist-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.hist-item-label{font-size:.7rem;font-weight:800;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase}
-.hist-key-box{background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 14px;margin-bottom:8px}
-.hist-key{font-family:'Courier New',monospace;font-size:.82rem;color:#fff;font-weight:700;word-break:break-all;letter-spacing:.5px}
-.hist-exp{font-size:.68rem;color:var(--muted);margin-bottom:10px}
-.hist-actions{display:flex;gap:8px}
-.hist-copy-btn{
-  flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;cursor:pointer;color:var(--text);
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  padding:10px;font-size:.75rem;font-weight:700;font-family:'Inter',sans-serif;
-  transition:.15s;letter-spacing:.3px;
-}
-.hist-copy-btn:hover{background:rgba(96,165,250,.15);border-color:rgba(96,165,250,.3);color:var(--blue)}
-.hist-ip-btn{
-  flex:1;background:rgba(34,211,160,.08);border:1px solid rgba(34,211,160,.2);
-  border-radius:10px;cursor:pointer;color:#22d3a0;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  padding:10px;font-size:.75rem;font-weight:700;font-family:'Inter',sans-serif;
-  transition:.15s;letter-spacing:.3px;
-}
-.hist-ip-btn:hover{background:rgba(34,211,160,.16);border-color:rgba(34,211,160,.4)}
-.hist-ip-btn:disabled{opacity:.5;cursor:not-allowed}
-.hist-badge{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.5px;
-  text-transform:uppercase;padding:3px 10px;border-radius:20px}
-.hist-badge.active{background:rgba(34,211,160,.12);color:var(--green);border:1px solid rgba(34,211,160,.2)}
-.hist-badge.expired{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.2)}
-.hist-bottom{padding:12px 16px 20px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
-.hist-hint{text-align:center;font-size:.68rem;color:var(--muted);margin-bottom:10px}
-.hist-close-btn{width:100%;padding:13px;border-radius:12px;border:none;cursor:pointer;
-  background:rgba(255,255,255,.07);color:var(--text);font-size:.85rem;font-weight:800;
-  font-family:'Inter',sans-serif;letter-spacing:1px;transition:.15s}
-.hist-close-btn:hover{background:rgba(255,255,255,.12)}
+    .status-panel {
+      display:none;
+      margin-top:18px;
+      background:rgba(255,240,245,0.5);
+      border-radius:20px;
+      padding:16px 18px;
+      border:1px solid rgba(206,147,216,0.2);
+    }
+    .status-panel .stat-title {
+      font-weight:700;
+      font-size:15px;
+      color:#6a1b4d;
+      margin-bottom:8px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .status-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:4px 14px;
+      font-size:13px;
+    }
+    .status-grid .sg-label { color:#b07a8a; font-weight:600; }
+    .status-grid .sg-value { color:#3d1a2b; font-weight:700; }
+    #statusIpMsg { font-size:12px; margin-bottom:8px; color:#d48a5a; font-weight:600; }
 
-/* ── DIVIDER ── */
-.divider{display:flex;align-items:center;gap:12px;margin:22px 0}
-.divider-line{flex:1;height:1px;background:rgba(255,255,255,.06)}
-.divider-txt{font-size:.65rem;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+    .admin-box {
+      margin-top:16px;
+      padding-top:14px;
+      border-top:2px dashed rgba(248,187,208,0.4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .admin-box .admin-title {
+      font-size:13px;
+      font-weight:700;
+      color:#ba68c8;
+    }
+    .admin-btn {
+      padding:6px 20px;
+      background:linear-gradient(135deg,#ce93d8,#ba68c8);
+      color:#fff;
+      font-weight:700;
+      text-decoration:none;
+      border-radius:30px;
+      font-size:13px;
+      font-family:'Quicksand',sans-serif;
+      box-shadow:0 4px 14px rgba(186,104,200,0.25);
+      transition:0.2s;
+    }
+    .admin-btn:hover { transform:scale(1.04); box-shadow:0 6px 24px rgba(186,104,200,0.35); }
 
-/* ── iOS DOWNLOAD ── */
-.btn-ios{
-  width:100%;padding:14px 18px;
-  background:rgba(255,255,255,.04);
-  border:1.5px solid rgba(255,255,255,.09);
-  border-radius:16px;color:var(--text);font-size:.88rem;font-weight:700;
-  cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.2px;
-  transition:.2s;display:flex;align-items:center;justify-content:center;
-  gap:10px;text-decoration:none;
-}
-.btn-ios-icon{
-  width:34px;height:34px;border-radius:10px;
-  background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(99,102,241,.25));
-  border:1px solid rgba(139,92,246,.3);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.btn-ios-icon svg{display:block}
-.btn-ios-texts{text-align:left;flex:1}
-.btn-ios-main{font-size:.88rem;font-weight:700;color:var(--text);line-height:1}
-.btn-ios-sub{font-size:.67rem;color:var(--muted);margin-top:3px;font-weight:500}
-.btn-ios-arrow{color:var(--muted);transition:.2s}
-.btn-ios:hover:not(.disabled){
-  background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.4);
-  transform:translateY(-1px);
-}
-.btn-ios:hover:not(.disabled) .btn-ios-arrow{color:var(--accent);transform:translateX(3px)}
-.btn-ios:active:not(.disabled){transform:translateY(0)}
-.btn-ios.disabled{opacity:.45;cursor:pointer}
-.btn-video-icon{background:linear-gradient(135deg,rgba(248,113,113,.2),rgba(239,68,68,.2))!important;border-color:rgba(248,113,113,.35)!important}
-.btn-video-guide:hover:not(.disabled){background:rgba(248,113,113,.1)!important;border-color:rgba(248,113,113,.4)!important}
-.video-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;align-items:center;justify-content:center;flex-direction:column}
-.video-modal-bg.open{display:flex}
-.video-modal-inner{width:92%;max-width:520px;border-radius:14px;overflow:hidden;background:#000;position:relative}
-.video-modal-inner video{width:100%;display:block;max-height:80vh}
-.video-modal-close{margin-top:14px;color:#fff;font-size:.95rem;background:rgba(255,255,255,.12);border:none;padding:9px 28px;border-radius:8px;cursor:pointer;letter-spacing:.5px}
-.ios-warn{
-  display:none;margin-top:8px;padding:9px 14px;
-  background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);
-  border-radius:11px;font-size:.75rem;color:#fbbf24;
-  text-align:center;line-height:1.5;
-  animation:warnIn .25s ease;
-}
-.ios-warn.show{display:block}
-@keyframes warnIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
-.ios-hint{font-size:.65rem;color:var(--muted);text-align:center;margin-top:8px;line-height:1.6}
+    .footer {
+      text-align:center;
+      margin-top:16px;
+      font-size:11px;
+      color:#c9a0b0;
+      font-weight:600;
+      letter-spacing:0.5px;
+    }
 
-/* ── RESULT ── */
+    .popup {
+      position:fixed;
+      top:50%; left:50%; transform:translate(-50%,-60%);
+      background:rgba(255,255,255,0.96);
+      backdrop-filter:blur(12px);
+      border:2px solid #f06292;
+      padding:16px 28px;
+      border-radius:28px;
+      color:#4a1a2e;
+      font-weight:700;
+      font-size:15px;
+      z-index:999;
+      opacity:0;
+      pointer-events:none;
+      transition:0.25s;
+      box-shadow:0 16px 48px rgba(236,64,122,0.2);
+      text-align:center;
+      max-width:90%;
+      font-family:'Quicksand',sans-serif;
+    }
+    .popup.show { opacity:1; transform:translate(-50%,-50%); }
+    .popup.error { border-color:#ef5350; box-shadow:0 16px 48px rgba(239,83,80,0.2); }
+  </style>
+</head>
+<body>
 
-/* ── RESULT MODAL ── */
-.result-modal{
-  position:fixed;inset:0;z-index:9998;
-  display:flex;align-items:flex-end;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity .25s;
-}
-.result-modal.show{opacity:1;pointer-events:all}
-.result-modal .hist-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px)}
-.result-sheet{
-  position:relative;z-index:1;
-  width:100%;max-width:480px;
-  background:#0d0d1a;
-  border:1px solid rgba(255,255,255,.08);
-  border-bottom:none;
-  border-radius:24px 24px 0 0;
-  overflow:hidden;
-  transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.1,.64,1);
-  box-shadow:0 -20px 60px rgba(0,0,0,.6);
-}
-.result-modal.show .result-sheet{transform:translateY(0)}
-.result-sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:12px auto 0}
+<div class="cute-bg">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
 
-.result-stripe-ok,.result-stripe-err{display:none}
+<div class="container">
+  <div class="header">
+    <span class="emoji-big">🌸</span>
+    <div class="title"><span>FF PROXY</span>
+    <div class="sub"><span>NGUYỄN TRUNG</div>
+    <div class="divider"></div>
+  </div>
 
-.result-head{
-  padding:20px 20px 16px;
-  display:flex;align-items:center;gap:14px;
-  border-bottom:1px solid rgba(255,255,255,.05);
-  position:relative;
-}
-.result-icon-wrap{
-  width:44px;height:44px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.ok-wrap{background:rgba(34,211,160,.15);border:1.5px solid rgba(34,211,160,.3)}
-.err-wrap{background:rgba(248,113,113,.15);border:1.5px solid rgba(248,113,113,.3)}
-.result-title{font-size:1rem;font-weight:800;flex:1}
-.ok-color{color:var(--green)}
-.err-color{color:var(--red)}
-.result-close{
-  position:absolute;right:16px;top:16px;
-  width:28px;height:28px;border-radius:8px;
-  background:rgba(255,255,255,.06);border:none;
-  color:var(--muted);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:.15s;
-}
-.result-close:hover{background:rgba(255,255,255,.1);color:var(--text)}
-
-.result-body{padding:6px 0 8px}
-.info-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem;
-}
-.info-row:last-child{border-bottom:none}
-.info-key{display:flex;align-items:center;gap:7px;color:var(--muted);font-weight:600}
-.info-key svg{opacity:.6;flex-shrink:0}
-.info-val{color:var(--text);font-family:'Courier New',monospace;font-size:.78rem;text-align:right;max-width:58%;word-break:break-all}
-.info-val.green{color:var(--green);font-family:'Inter',sans-serif;font-weight:800;font-size:.86rem}
-.info-val.yellow{color:var(--yellow);font-family:'Inter',sans-serif;font-weight:700}
-.info-val.blue{color:var(--blue)}
-.result-err-msg{padding:16px 20px;color:#f87171;font-size:.84rem;line-height:1.6}
-
-@keyframes popIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-
-/* ── EVENT BOX ── */
-.ev-box{
-  margin-top:12px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.09);
-  background:rgba(255,255,255,.03);
-  overflow:hidden;
-}
-.ev-head{display:flex;align-items:center;gap:10px;padding:12px 14px}
-.ev-icon{
-  width:34px;height:34px;border-radius:10px;flex-shrink:0;
-  background:rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center;transition:.3s;
-}
-.ev-icon.claimed{background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.4)}
-.ev-icon svg{flex-shrink:0}
-.ev-info{flex:1;min-width:0}
-.ev-title{font-size:.78rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
-.ev-live-badge{
-  font-size:.58rem;font-weight:700;color:#facc15;
-  background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.3);
-  border-radius:20px;padding:1px 7px;
-}
-.ev-sub{font-size:.63rem;color:var(--muted);margin-top:2px}
-.ev-sub.err{color:#f87171;font-weight:600}
-.ev-live-pill{
-  flex-shrink:0;background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.35);
-  color:#facc15;font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap;
-}
-.ev-body{border-top:1px solid rgba(255,255,255,.06);padding:10px 14px}
-.ev-row{display:flex;justify-content:space-between;align-items:center;font-size:.78rem}
-.ev-cd{font-family:'Courier New',monospace;font-weight:700;font-size:.9rem;letter-spacing:1.5px}
-.ev-cd.open-cd{color:#facc15}
-.ev-cd.closed-cd{color:var(--text)}
-.btn-get-free{
-  width:100%;margin-top:10px;
-  background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);
-  border-radius:10px;padding:11px 14px;color:#facc15;cursor:pointer;
-  display:flex;align-items:center;gap:10px;transition:.2s;
-}
-.btn-get-free:hover:not(:disabled){background:rgba(250,204,21,.14)}
-.btn-get-free:disabled{opacity:.5;cursor:not-allowed}
-.btn-get-free-texts{text-align:left}
-.btn-get-free-main{font-size:.78rem;font-weight:700;display:block}
-.btn-get-free-sub{font-size:.6rem;color:rgba(255,255,255,.4);margin-top:1px;display:block}
-.ev-key-result{
-  display:none;margin-top:8px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;padding:10px 12px;
-}
-.ev-key-val{font-family:'Courier New',monospace;font-weight:700;font-size:.9rem;color:var(--text);letter-spacing:2px;word-break:break-all}
-.ev-key-exp{font-size:.62rem;color:var(--muted);margin-top:3px}
-.wlc-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);opacity:0;transition:opacity .4s;pointer-events:none}.wlc-overlay.show{opacity:1;pointer-events:all}.wlc-box{background:linear-gradient(145deg,#0f0f1a,#1a1a2e);border:1px solid rgba(139,92,246,.35);border-radius:20px;padding:0;width:92%;max-width:420px;overflow:hidden;transform:scale(.88) translateY(24px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 24px 60px rgba(0,0,0,.7)}.wlc-overlay.show .wlc-box{transform:scale(1) translateY(0)}.wlc-banner{width:100%;display:block;border-radius:0}.wlc-body{padding:18px 20px 20px}.wlc-title{font-size:1.15rem;font-weight:700;color:#fff;margin:0 0 6px;text-align:center;background:linear-gradient(90deg,#a78bfa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.wlc-desc{font-size:.82rem;color:rgba(255,255,255,.65);text-align:center;line-height:1.55;margin:0 0 16px}.wlc-close{display:block;width:100%;padding:11px;border:none;border-radius:12px;cursor:pointer;font-size:.88rem;font-weight:600;letter-spacing:.3px;color:#fff;background:linear-gradient(135deg,#7c3aed,#4f46e5);transition:opacity .2s}.wlc-close:hover{opacity:.85}.wlc-no-show{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;cursor:pointer}.wlc-no-show>span{font-size:.74rem;color:rgba(255,255,255,.4);user-select:none}.wlc-cb{position:relative;width:18px;height:18px;flex-shrink:0}.wlc-cb input{opacity:0;width:0;height:0;position:absolute}.wlc-cb-box{position:absolute;inset:0;border-radius:5px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.2);transition:background .2s,border-color .2s}.wlc-cb-box:after{content:"";position:absolute;left:4px;top:1.5px;width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) scale(0);transition:transform .18s cubic-bezier(.34,1.56,.64,1);opacity:0}.wlc-cb input:checked+.wlc-cb-box{background:#7c3aed;border-color:#7c3aed}.wlc-cb input:checked+.wlc-cb-box:after{transform:rotate(45deg) scale(1);opacity:1}.ev-copy-btn{
-  margin-top:8px;width:100%;display:flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:8px;padding:7px 10px;color:var(--text);cursor:pointer;font-size:.75rem;font-weight:600;transition:.15s;
-}
-.ev-copy-btn:hover{background:rgba(255,255,255,.1)}
-.ev-claimed-box{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.ev-claimed-key{font-family:'Courier New',monospace;font-size:.8rem;font-weight:700;color:var(--text)}
-.ev-paste-btn{
-  flex-shrink:0;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);
-  color:var(--accent);font-size:.7rem;font-weight:700;padding:5px 10px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:.15s;
-}
-.ev-paste-btn:hover{background:rgba(139,92,246,.25)}
-
-/* ── TABS ── */
-.tabs{display:flex;background:rgba(255,255,255,.04);border-radius:12px;padding:4px;margin-bottom:20px;gap:3px}
-.tab-btn{
-  flex:1;padding:9px 0;border-radius:9px;border:none;background:transparent;
-  color:var(--muted);font-size:.78rem;font-weight:700;font-family:'Inter',sans-serif;
-  cursor:pointer;transition:.2s;letter-spacing:.5px;text-transform:uppercase;
-}
-.tab-btn.active{background:rgba(139,92,246,.25);color:#e2d9ff;box-shadow:0 0 0 1px rgba(139,92,246,.25)}
-.tab-btn:hover:not(.active){color:var(--text)}
-.tab-content{display:none}
-.tab-content.active{display:block}
-
-/* ── TRA CỨU ── */
-.ck-label{font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.ck-inp{
-  width:100%;box-sizing:border-box;
-  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
-  border-radius:14px;padding:13px 16px;
-  color:var(--text);font-size:.9rem;font-family:'Courier New',monospace;
-  outline:none;transition:.2s;margin-bottom:12px;
-}
-.ck-inp:focus{border-color:rgba(139,92,246,.45);background:rgba(139,92,246,.04)}
-.btn-ck{
-  width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;
-  background:rgba(255,255,255,.08);color:var(--text);
-  font-size:.85rem;font-weight:800;font-family:'Inter',sans-serif;
-  letter-spacing:.5px;text-transform:uppercase;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:.2s;
-}
-.btn-ck:hover{background:rgba(255,255,255,.12)}
-.ck-result{margin-top:16px;border-radius:16px;overflow:hidden;
-  border:1px solid rgba(255,255,255,.07);display:none}
-.ck-result.show{display:block;animation:popIn .25s ease}
-.ck-result-ok{border-color:rgba(34,211,160,.2);background:rgba(34,211,160,.04)}
-.ck-result-err{border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.04)}
-.ck-result-head{
-  padding:14px 18px;display:flex;align-items:center;gap:10px;
-  border-bottom:1px solid rgba(255,255,255,.05);
-}
-.ck-result-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ck-ok-icon{background:rgba(34,211,160,.15);border:1.5px solid rgba(34,211,160,.25)}
-.ck-err-icon{background:rgba(248,113,113,.15);border:1.5px solid rgba(248,113,113,.25)}
-.ck-result-title{font-size:.9rem;font-weight:800}
-.ck-result-rows{padding:4px 0 6px}
-.ck-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:9px 18px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.8rem;
-}
-.ck-row:last-child{border-bottom:none}
-.ck-row-lbl{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:600}
-.ck-row-val{font-family:'Courier New',monospace;font-size:.76rem;text-align:right;max-width:60%;word-break:break-all}
-.ck-row-val.blue{color:var(--blue)}
-.ck-row-val.green{color:var(--green);font-family:'Inter',sans-serif;font-weight:800;font-size:.83rem}
-.ck-row-val.yellow{color:var(--yellow);font-family:'Inter',sans-serif;font-weight:700}
-.ck-row-val.red{color:var(--red);font-family:'Inter',sans-serif;font-weight:700}
-.ck-err-msg{padding:14px 18px;color:#f87171;font-size:.83rem;line-height:1.6}
-
-/* ── FOOTER ── */
-.footer{text-align:center;margin-top:22px;font-size:.67rem;color:#2a2a40;letter-spacing:.5px}
-
-@keyframes spin{to{transform:rotate(360deg)}}
-.spin{animation:spin .8s linear infinite;display:inline-block}
-
-/* ── ACTION SHEET (sau kích hoạt thành công) ── */
-.action-modal{position:fixed;inset:0;z-index:10001;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
-.action-modal.open{opacity:1;pointer-events:all}
-.action-sheet{position:relative;z-index:1;width:100%;max-width:480px;background:#111120;border:1px solid rgba(255,255,255,.1);border-bottom:none;border-radius:24px 24px 0 0;padding:0 0 env(safe-area-inset-bottom,0);transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.1,.64,1);box-shadow:0 -24px 64px rgba(0,0,0,.8);}
-.action-modal.open .action-sheet{transform:translateY(0)}
-.action-handle{width:36px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin:12px auto 0}
-.action-sheet-inner{padding:16px 20px 24px}
-.action-sheet-title{text-align:center;font-size:.78rem;font-weight:700;letter-spacing:2.5px;color:#60a5fa;padding-bottom:16px;text-transform:uppercase}
-.action-btn{width:100%;padding:16px;border-radius:14px;border:none;cursor:pointer;font-size:.88rem;font-weight:700;font-family:'Inter',sans-serif;letter-spacing:1px;text-transform:uppercase;transition:.2s;display:flex;align-items:center;justify-content:center;gap:9px}
-.action-btn+.action-btn{margin-top:10px}
-.action-btn-ip{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:var(--text)}
-.action-btn-ip:hover{background:rgba(255,255,255,.1)}
-.action-cancel{width:100%;background:none;border:none;color:#f87171;font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;padding:14px;font-family:'Inter',sans-serif;margin-top:4px}
-.action-cancel:hover{opacity:.8}
-
-/* ── IP UPDATE MODAL ── */
-.ipupd-modal{position:fixed;inset:0;z-index:10002;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
-.ipupd-modal.open{opacity:1;pointer-events:all}
-.ipupd-sheet{position:relative;z-index:1;width:100%;max-width:480px;background:#111120;border:1px solid rgba(255,255,255,.1);border-bottom:none;border-radius:24px 24px 0 0;padding:0 0 env(safe-area-inset-bottom,0);transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.1,.64,1);box-shadow:0 -24px 64px rgba(0,0,0,.8);}
-.ipupd-modal.open .ipupd-sheet{transform:translateY(0)}
-.ipupd-inner{padding:16px 20px 24px}
-.ipupd-title{text-align:center;font-size:.78rem;font-weight:700;letter-spacing:2.5px;color:#60a5fa;text-transform:uppercase;margin-bottom:2px}
-.ipupd-sub{text-align:center;font-size:.63rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px}
-.ipupd-btn{width:100%;padding:16px;border-radius:14px;border:none;cursor:pointer;font-size:.88rem;font-weight:700;font-family:'Inter',sans-serif;letter-spacing:1px;text-transform:uppercase;transition:.2s}
-.ipupd-btn-auto{background:#fff;color:#0d0d1a;margin-bottom:10px}
-.ipupd-btn-auto:hover:not(:disabled){background:#e2d9ff}
-.ipupd-btn-auto:disabled{opacity:.5;cursor:not-allowed}
-.ipupd-btn-manual{background:rgba(255,255,255,.06);border:1.5px solid rgba(96,165,250,.25);color:#60a5fa}
-.ipupd-btn-manual:hover{background:rgba(96,165,250,.1)}
-.ipupd-back{width:100%;background:none;border:none;color:var(--muted);font-size:.78rem;font-weight:600;cursor:pointer;padding:14px;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;margin-top:2px}
-.ipupd-back:hover{color:var(--text)}
-.ipupd-manual-wrap{display:none;margin-top:14px}
-.ipupd-ip-inp{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;color:var(--text);font-size:.9rem;font-family:'Courier New',monospace;outline:none;transition:.2s;letter-spacing:1px;text-align:center}
-.ipupd-ip-inp:focus{border-color:rgba(96,165,250,.5);background:rgba(96,165,250,.05)}
-.ipupd-submit{width:100%;margin-top:10px;padding:14px;border-radius:14px;border:none;cursor:pointer;background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.3);color:#60a5fa;font-size:.88rem;font-weight:700;font-family:'Inter',sans-serif;letter-spacing:1px;text-transform:uppercase;transition:.2s}
-.ipupd-submit:hover:not(:disabled){background:rgba(96,165,250,.25)}
-.ipupd-submit:disabled{opacity:.5;cursor:not-allowed}
-.ipupd-feedback{margin-top:12px;padding:10px 14px;border-radius:12px;font-size:.78rem;font-weight:600;text-align:center;display:none}
-.ipupd-feedback.ok{background:rgba(34,211,160,.1);border:1px solid rgba(34,211,160,.25);color:#22d3a0}
-.ipupd-feedback.err{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#f87171}
-
-/* ── CHAT FAB ── */
-.chat-fab-wrap{position:fixed;bottom:24px;right:20px;z-index:9990;width:54px;height:54px}
-.chat-fab{
-  width:54px;height:54px;border-radius:50%;border:none;padding:0;
-  cursor:pointer;overflow:hidden;display:block;
-  box-shadow:0 4px 20px rgba(0,0,0,.55);
-  transition:.2s;position:relative;z-index:0;
-}
-.chat-fab:hover{transform:scale(1.08)}
-.chat-fab img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
-.chat-fab-border{display:none}
-.chat-unread{
-  position:absolute;top:-3px;right:-3px;
-  background:#f87171;color:#fff;
-  font-size:.55rem;font-weight:800;min-width:17px;height:17px;
-  border-radius:9px;display:none;align-items:center;justify-content:center;
-  padding:0 3px;border:2px solid var(--bg);
-}
-.chat-unread.show{display:flex}
-
-/* ── BOT FAB ── */
-/* ── ACTIVATION TOAST ── */
-.act-toast-wrap{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:19999;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;width:min(360px,92vw)}
-.act-toast{background:linear-gradient(135deg,rgba(16,24,48,.97),rgba(8,14,36,.97));border:1px solid rgba(99,210,140,.35);border-radius:14px;padding:11px 16px 11px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 8px 32px rgba(0,0,0,.75);pointer-events:none;animation:act-toast-in .35s cubic-bezier(.34,1.1,.64,1) both}
-.act-toast.out{animation:act-toast-out .3s ease-in forwards}
-@keyframes act-toast-in{from{opacity:0;transform:translateY(-18px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes act-toast-out{to{opacity:0;transform:translateY(-14px) scale(.93)}}
-.act-toast-icon{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#15803d);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.act-toast-body{min-width:0}
-.act-toast-title{font-size:.72rem;color:#86efac;font-weight:700;margin-bottom:2px}
-.act-toast-key{font-size:.78rem;color:#f0fdf4;font-weight:600;font-family:monospace;word-break:break-all}
-.act-toast-dur{font-size:.67rem;color:#4ade80;margin-top:2px}
-.bot-fab-wrap{position:fixed;bottom:24px;left:20px;z-index:9990;width:54px;height:54px}
-.bot-fab{width:54px;height:54px;border-radius:50%;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#06b6d4,#0e7490);box-shadow:0 4px 20px rgba(0,0,0,.55);transition:.2s}
-.bot-fab:hover{transform:scale(1.08)}
-/* ── BOT PANEL ── */
-.bot-panel{position:fixed;bottom:88px;left:16px;z-index:9989;width:calc(100vw - 32px);max-width:370px;height:min(500px,72vh);background:#0d0d1a;border:1px solid rgba(6,182,212,.18);border-radius:20px;display:flex;flex-direction:column;box-shadow:0 16px 60px rgba(0,0,0,.75);opacity:0;pointer-events:none;transform:translateY(16px) scale(.96);transition:opacity .2s,transform .25s cubic-bezier(.34,1.1,.64,1)}
-.bot-panel.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1)}
-.bot-head{padding:12px 14px 11px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px;flex-shrink:0;border-radius:20px 20px 0 0;background:rgba(6,182,212,.06)}
-.bot-head-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#06b6d4,#0e7490);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.bot-head-name{font-weight:800;font-size:.88rem;color:var(--text)}
-.bot-head-sub{font-size:.65rem;color:#22d3ee;margin-top:1px}
-.bot-close-btn{margin-left:auto;background:rgba(255,255,255,.07);border:none;color:var(--muted);border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
-.bot-msgs{flex:1;overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:8px}
-.bot-msgs::-webkit-scrollbar{width:3px}
-.bot-msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
-.bot-bubble-wrap{display:flex;flex-direction:column;max-width:85%}
-.bot-bubble-wrap.user{align-self:flex-end;align-items:flex-end}
-.bot-bubble-wrap.bot{align-self:flex-start;align-items:flex-start}
-.bot-bubble{padding:9px 13px;border-radius:14px;font-size:.8rem;line-height:1.5;word-break:break-word;white-space:pre-wrap}
-.bot-bubble-wrap.user .bot-bubble{background:linear-gradient(135deg,#0e7490,#06b6d4);color:#fff;border-bottom-right-radius:4px}
-.bot-bubble-wrap.bot .bot-bubble{background:rgba(255,255,255,.08);color:var(--text);border-bottom-left-radius:4px}
-.bot-bubble-wrap.bot .bot-label{font-size:.6rem;color:#22d3ee;font-weight:700;margin-bottom:3px;padding-left:2px}
-.bot-typing{display:flex;gap:4px;align-items:center;padding:10px 14px;background:rgba(255,255,255,.07);border-radius:12px;border-bottom-left-radius:4px;width:fit-content}
-.bot-typing span{width:6px;height:6px;border-radius:50%;background:#22d3ee;animation:bot-dot .9s ease-in-out infinite}
-.bot-typing span:nth-child(2){animation-delay:.15s}
-.bot-typing span:nth-child(3){animation-delay:.3s}
-@keyframes bot-dot{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
-.bot-inp-wrap{padding:9px 12px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:8px;align-items:center;flex-shrink:0}
-.bot-inp{flex:1;padding:9px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(6,182,212,.2);border-radius:20px;color:var(--text);font-size:.82rem;font-family:'Inter',sans-serif;outline:none;transition:.15s}
-.bot-inp:focus{border-color:rgba(6,182,212,.5);background:rgba(6,182,212,.06)}
-.bot-inp::placeholder{color:#2a2a40}
-.bot-send{width:34px;height:34px;border-radius:50%;border:none;background:linear-gradient(135deg,#06b6d4,#0e7490);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}
-.bot-send:hover{transform:scale(1.08)}
-.bot-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
-
-/* ── CHAT PANEL ── */
-.chat-panel{
-  position:fixed;bottom:88px;right:16px;z-index:9989;
-  width:calc(100vw - 32px);max-width:370px;
-  height:min(520px,70vh);
-  background:#0d0d1a;border:1px solid rgba(255,255,255,.1);
-  border-radius:20px;display:flex;flex-direction:column;
-  box-shadow:0 16px 60px rgba(0,0,0,.75);
-  opacity:0;pointer-events:none;
-  transform:translateY(16px) scale(.96);
-  transition:opacity .2s,transform .25s cubic-bezier(.34,1.1,.64,1);
-}
-.chat-panel.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1)}
-.chat-pin-bar{display:none;align-items:center;gap:7px;padding:6px 12px;background:linear-gradient(90deg,rgba(251,191,36,.13),rgba(251,191,36,.06));border-bottom:1px solid rgba(251,191,36,.25);font-size:.74rem;color:#fbbf24;cursor:pointer;flex-shrink:0}
-.chat-pin-bar.show{display:flex}
-.chat-pin-icon{flex-shrink:0;opacity:.85}
-.chat-pin-text{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.chat-pin-label{font-size:.68rem;color:#fbbf24;font-weight:700;flex-shrink:0}
-.chat-head{
-  padding:12px 14px 11px;border-bottom:1px solid rgba(255,255,255,.07);
-  display:flex;align-items:center;gap:10px;flex-shrink:0;border-radius:20px 20px 0 0;
-  background:rgba(255,255,255,.02);
-}
-.chat-head-img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1.5px solid rgba(255,255,255,.15)}
-.chat-head-info{flex:1;min-width:0}
-.chat-head-title{font-size:.86rem;font-weight:700;color:var(--text)}
-.chat-head-sub{font-size:.62rem;color:#22d3a0;margin-top:1px;font-weight:600}
-.chat-close-btn{background:rgba(255,255,255,.06);border:none;width:28px;height:28px;border-radius:8px;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
-.chat-close-btn:hover{background:rgba(255,255,255,.1);color:var(--text)}
-.chat-rename-btn{background:rgba(255,255,255,.06);border:none;height:28px;border-radius:8px;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:5px;padding:0 9px;font-size:.68rem;font-weight:700;font-family:'Inter',sans-serif;transition:.15s;flex-shrink:0;white-space:nowrap}
-.chat-rename-btn:hover{background:rgba(139,92,246,.15);color:#a78bfa}
-.chat-rename-popup{position:absolute;top:56px;right:14px;z-index:100;background:#1a1a2e;border:1px solid rgba(139,92,246,.3);border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.5);min-width:220px}
-.chat-rename-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;color:#fff;font-size:.78rem;font-family:'Inter',sans-serif;outline:none}
-.chat-rename-inp:focus{border-color:rgba(139,92,246,.5)}
-.chat-rename-save{background:linear-gradient(135deg,#7c3aed,#4338ca);border:none;border-radius:8px;padding:7px 12px;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
-.chat-rename-save:hover{opacity:.85}
-.chat-msgs{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:5px}
-.chat-msgs::-webkit-scrollbar{width:3px}
-.chat-msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-.chat-time-sep{text-align:center;font-size:.58rem;color:var(--muted);margin:4px 0;flex-shrink:0}
-.chat-msg{display:flex;gap:7px;align-items:flex-end;max-width:90%}
-.chat-msg.own{align-self:flex-end;flex-direction:row-reverse}
-.chat-msg.other{align-self:flex-start}
-.chat-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff}
-.chat-bubble-wrap{display:flex;flex-direction:column;gap:2px}
-.chat-sender{font-size:.6rem;color:var(--muted);padding:0 5px;font-weight:600}
-.chat-msg.own .chat-sender{text-align:right;display:none}
-.chat-bubble{padding:8px 11px;border-radius:14px;font-size:.8rem;line-height:1.45;word-break:break-word;white-space:pre-wrap}
-.chat-msg.own .chat-bubble{background:linear-gradient(135deg,#7c3aed,#4338ca);color:#fff;border-bottom-right-radius:4px}
-.chat-msg.other .chat-bubble{background:rgba(255,255,255,.09);color:var(--text);border-bottom-left-radius:4px}
-.chat-btime{font-size:.55rem;color:rgba(255,255,255,.28);padding:0 5px}
-.chat-msg.own .chat-btime{text-align:right}
-.chat-empty-msg{color:var(--muted);font-size:.75rem;text-align:center;padding:24px 12px;margin:auto}
-.chat-ctx-menu{position:fixed;z-index:10300;background:rgba(24,24,36,.97);border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 4px 24px rgba(0,0,0,.6);padding:4px;min-width:130px;opacity:0;pointer-events:none;transition:opacity .12s;transform:scale(.95);transform-origin:top left}
-.chat-ctx-menu.open{opacity:1;pointer-events:all;transform:scale(1)}
-.chat-ctx-btn{width:100%;padding:9px 13px;border:none;background:none;color:var(--text);font-size:.82rem;font-family:'Inter',sans-serif;cursor:pointer;border-radius:7px;text-align:left;display:flex;align-items:center;gap:9px}
-.chat-ctx-btn:hover{background:rgba(255,255,255,.08)}
-.chat-reply-bar{display:none;align-items:center;gap:9px;padding:7px 12px;background:rgba(139,92,246,.07);border-top:1px solid rgba(139,92,246,.18);flex-shrink:0}
-.chat-reply-bar.show{display:flex}
-.chat-reply-bar-line{width:3px;min-height:28px;background:#7c3aed;border-radius:2px;flex-shrink:0}
-.chat-reply-bar-content{flex:1;min-width:0}
-.chat-reply-bar-name{font-size:.62rem;color:#a78bfa;font-weight:700;margin-bottom:1px}
-.chat-reply-bar-text{font-size:.73rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
-.chat-reply-bar-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;padding:4px 6px;border-radius:50%;flex-shrink:0;line-height:1}
-.chat-reply-bar-close:hover{color:var(--text)}
-.chat-quote{background:rgba(139,92,246,.1);border-left:3px solid rgba(139,92,246,.6);border-radius:5px;padding:5px 9px;margin-bottom:4px;cursor:default}
-.chat-quote-name{font-size:.6rem;color:#a78bfa;font-weight:700;margin-bottom:1px}
-.chat-quote-text{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
-.chat-msg.own .chat-quote{background:rgba(255,255,255,.12);border-left-color:rgba(255,255,255,.5)}
-.chat-msg.own .chat-quote-name{color:rgba(255,255,255,.8)}
-.chat-msg.own .chat-quote-text{color:rgba(255,255,255,.65)}
-.chat-inp-wrap{padding:9px 12px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:8px;align-items:center;flex-shrink:0}
-.chat-inp{flex:1;padding:9px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:var(--text);font-size:.82rem;font-family:'Inter',sans-serif;outline:none;transition:.15s}
-.chat-inp:focus{border-color:rgba(139,92,246,.4);background:rgba(139,92,246,.06)}
-.chat-inp::placeholder{color:#2a2a40}
-.chat-send{width:34px;height:34px;border-radius:50%;border:none;background:linear-gradient(135deg,#7c3aed,#4338ca);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}
-.chat-send:hover{transform:scale(1.08)}
-.chat-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.chat-avatar-img{width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1.5px solid rgba(255,255,255,.15)}
-@keyframes rainbow-shift{0%{background-position:0% center}100%{background-position:200% center}}
-.chat-admin-name{font-size:.64rem;font-weight:800;padding:0 5px;background:linear-gradient(90deg,#ff0000,#ff8c00,#ffd700,#00ee44,#00aaff,#8800ff,#ff00cc,#ff0000);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow-shift 1.2s linear infinite;display:block}
-.chat-msg.admin .chat-bubble{background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.18)}
-.chat-avatar-admin-wrap{position:relative;width:28px;height:28px;flex-shrink:0}
-.chat-avatar-admin-wrap .chat-avatar-img{width:100%;height:100%;border:none}
-.chat-avatar-admin-wrap::after{
-  content:'';position:absolute;inset:-5px;
-  background:url('https://raw.githubusercontent.com/WusThanhDieu/Profile-ThanhDieu.Com-V5-Tester/refs/heads/main/res/v5/img/crown/mong-vuot-rong.png') center/contain no-repeat;
-  pointer-events:none;
-}
-
-/* ── CHAT IMG CHOICE SHEET ── */
-.chat-ic-modal{position:fixed;inset:0;z-index:10100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
-.chat-ic-modal.open{opacity:1;pointer-events:all}
-.chat-ic-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px)}
-.chat-ic-sheet{position:relative;z-index:1;width:100%;max-width:480px;background:#111120;border:1px solid rgba(255,255,255,.1);border-bottom:none;border-radius:24px 24px 0 0;padding:0 0 env(safe-area-inset-bottom,0);transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.1,.64,1);box-shadow:0 -20px 60px rgba(0,0,0,.7)}
-.chat-ic-modal.open .chat-ic-sheet{transform:translateY(0)}
-.chat-ic-inner{padding:16px 20px 24px}
-.chat-ic-title{text-align:center;font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
-.chat-ic-btn{width:100%;padding:15px 18px;border-radius:14px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--text);font-size:.88rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px;transition:.15s;margin-bottom:10px}
-.chat-ic-btn:hover{background:rgba(255,255,255,.1)}
-.chat-ic-btn.accent{border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.1);color:#c4b5fd}
-.chat-ic-btn.accent:hover{background:rgba(139,92,246,.2)}
-.chat-ic-cancel{width:100%;background:none;border:none;color:#f87171;font-size:.82rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:14px;font-family:'Inter',sans-serif;margin-top:2px}
-
-.chat-tool-btn{width:30px;height:30px;border:none;background:none;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;border-radius:8px;transition:.15s;flex-shrink:0;padding:0}
-.chat-tool-btn:hover{background:rgba(255,255,255,.08);color:var(--text)}
-
-/* ── EMOJI PICKER ── */
-.emoji-picker-wrap{position:relative}
-.emoji-picker{
-  position:absolute;bottom:calc(100% + 8px);left:0;
-  background:#16162a;border:1px solid rgba(255,255,255,.12);
-  border-radius:14px;padding:8px;
-  display:grid;grid-template-columns:repeat(8,1fr);gap:1px;
-  width:256px;max-height:180px;overflow-y:auto;
-  box-shadow:0 8px 32px rgba(0,0,0,.7);
-  opacity:0;pointer-events:none;transform:translateY(6px) scale(.97);
-  transition:opacity .15s,transform .15s;z-index:20;
-}
-.emoji-picker.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1)}
-.emoji-picker::-webkit-scrollbar{width:3px}
-.emoji-picker::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-.ep-btn{width:30px;height:30px;border:none;background:none;cursor:pointer;font-size:1.05rem;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:.1s}
-.ep-btn:hover{background:rgba(255,255,255,.1);transform:scale(1.15)}
-
-/* ── CHAT IMAGE ── */
-.chat-img{max-width:180px;max-height:200px;border-radius:10px;display:block;cursor:zoom-in;object-fit:cover}
-.chat-img-bubble{padding:4px !important;background:transparent !important}
-.chat-img-uploading{
-  width:120px;height:80px;border-radius:10px;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--muted);font-size:.7rem;
-}
-
-/* ── LIGHTBOX ── */
-.chat-lightbox{
-  position:fixed;inset:0;z-index:99999;
-  background:rgba(0,0,0,.92);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity .2s;
-}
-.chat-lightbox.open{opacity:1;pointer-events:all}
-.chat-lightbox img{max-width:94vw;max-height:90vh;border-radius:10px;object-fit:contain}
-.chat-lightbox-close{position:absolute;top:16px;right:18px;background:rgba(255,255,255,.1);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-
-/* ── CHAT PREVIEW BUBBLE ── */
-.chat-preview{
-  position:absolute;right:calc(100% + 10px);bottom:4px;
-  background:#1c1c30;border:1px solid rgba(139,92,246,.3);
-  border-radius:12px 12px 0 12px;
-  padding:8px 12px;max-width:230px;min-width:140px;
-  box-shadow:0 6px 24px rgba(0,0,0,.55);
-  pointer-events:none;
-  opacity:0;transform:translateX(8px) scale(.94);
-  transition:opacity .2s ease,transform .22s cubic-bezier(.34,1.1,.64,1);
-  white-space:nowrap;
-}
-.chat-preview::after{
-  content:'';position:absolute;right:-7px;bottom:0;
-  border:6px solid transparent;border-left-color:#1c1c30;
-  border-bottom:none;border-right:none;
-}
-.chat-preview.show{opacity:1;transform:translateX(0) scale(1)}
-.chat-preview-name{font-size:.62rem;font-weight:700;color:#a78bfa;margin-bottom:3px}
-.chat-preview-text{font-size:.77rem;color:#e2d9ff;overflow:hidden;text-overflow:ellipsis;max-width:210px}
-
-/* ── PASSWORD MODALS (bottom sheet, giống result modal) ── */
-.pw-modal{position:fixed;inset:0;z-index:20000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
-.pw-modal.open{opacity:1;pointer-events:all}
-.pw-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(7px)}
-.pw-sheet{position:relative;z-index:1;width:100%;max-width:480px;background:#0d0d1a;border:1px solid rgba(255,255,255,.08);border-bottom:none;border-radius:24px 24px 0 0;overflow:hidden;transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.1,.64,1);box-shadow:0 -20px 60px rgba(0,0,0,.6)}
-.pw-modal.open .pw-sheet{transform:translateY(0)}
-.pw-sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:12px auto 0}
-.pw-head{padding:20px 20px 16px;display:flex;align-items:center;gap:14px;border-bottom:1px solid rgba(255,255,255,.05);position:relative}
-.pw-head-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.25rem}
-.pw-head-icon.create{background:rgba(34,211,160,.15);border:1.5px solid rgba(34,211,160,.3)}
-.pw-head-icon.verify{background:rgba(251,191,36,.15);border:1.5px solid rgba(251,191,36,.3)}
-.pw-head-title{font-size:1rem;font-weight:800;flex:1}
-.pw-head-title.create{color:var(--green)}
-.pw-head-title.verify{color:#fbbf24}
-.pw-body{padding:16px 20px 28px}
-.pw-desc{font-size:.74rem;color:var(--muted);line-height:1.6;margin-bottom:14px}
-.pw-inp{width:100%;padding:13px 16px;background:rgba(255,255,255,.055);border:1.5px solid rgba(255,255,255,.09);border-radius:12px;color:var(--text);font-size:.88rem;font-family:'Inter',sans-serif;outline:none;transition:.15s;margin-bottom:10px;box-sizing:border-box}
-.pw-inp:focus{border-color:rgba(139,92,246,.5);background:rgba(139,92,246,.06)}
-.pw-inp::placeholder{color:#2e2e50}
-.pw-btn{width:100%;padding:14px;border-radius:13px;border:none;background:linear-gradient(135deg,#7c3aed,#4338ca);color:#fff;font-size:.9rem;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;transition:.15s;margin-top:2px}
-.pw-btn:hover:not(:disabled){filter:brightness(1.1)}
-.pw-btn:disabled{opacity:.45;cursor:not-allowed}
-.pw-err{color:#f87171;font-size:.71rem;text-align:center;margin-top:9px;min-height:16px;font-weight:600}
-.pw-skip{width:100%;background:none;border:none;color:var(--muted);font-size:.72rem;cursor:pointer;padding:14px 8px 0;font-family:'Inter',sans-serif;transition:.15s}
-.pw-skip:hover{color:#a78bfa}
-</style>
-</head><body>
-<div class="blob blob1"></div>
-<div class="blob blob2"></div>
-
-<div class="wrap">
-  <!-- Logo -->
-  <div class="logo">
-    <div style="margin-bottom:14px">
-      <span class="logo-badge-text">Nguyễn Trung</span>
+  <div class="info-grid">
+    <div>
+      <div class="ig-label">📡 IP</div>
+      <div class="ig-value" id="ip">...</div>
     </div>
     <div>
-      <span class="43" id="42">
-        <span class="42"></span>
-        <span id="42">…</span> 
-      </span>
+      <div class="ig-label">📱 DEVICE</div>
+      <div class="ig-value" id="deviceId">...</div>
     </div>
   </div>
 
-  <div class="card-outer">
-  <div class="cat-ear cat-ear-l"></div>
-  <div class="cat-ear cat-ear-r"></div>
-  <img src="https://i.imgur.com/6pkpzhR.gif" class="card-deco-left" alt=""/>
-  <div class="card">
-    <div class="card-glow"></div>
-    
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab-btn active" id="tab-btn-gd" onclick="switchTab('gd')">Giao dịch</button>
-      <button class="tab-btn" id="tab-btn-ck" onclick="switchTab('ck')">Tra cứu key</button>
-    </div>
-
-    <!-- Tab: GIAO DỊCH -->
-    <div class="tab-content active" id="tab-gd">
-
-    <!-- Chips: IP + Device ID -->
-    <div class="chips">
-      <div class="chip">
-        <div class="chip-lbl">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-          IP của bạn
-        </div>
-        <div class="chip-val" id="chip-ip">Đang tải…</div>
-      </div>
-      <div class="chip">
-        <div class="chip-lbl">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-linecap="round" stroke-width="3"/></svg>
-          Device ID
-        </div>
-        <div class="chip-val" id="chip-hwid">Đang tải…</div>
-      </div>
-    </div>
-
-    <!-- Key input -->
-    <div class="inp-wrap">
-      <div class="inp-lbl">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-        Key bản quyền
-      </div>
-      <input id="key-inp" class="key-inp" type="text"
-        placeholder="Dán key của bạn vào đây…"
-        autocomplete="off" autocorrect="off" spellcheck="false"/>
-    </div>
-
-    <!-- Activate button -->
-    <button class="btn-act" id="btn-act" onclick="doActivate()">
-      <span class="btn-act-inner" id="btn-act-inner">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        Kích Hoạt Ngay
-      </span>
-    </button>
-
-    </div><!-- /tab-gd -->
-
-    <!-- Tab: TRA CỨU KEY -->
-    <div class="tab-content" id="tab-ck">
-      <div class="ck-label">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        Key cần kiểm tra
-      </div>
-      <input id="ck-inp" class="ck-inp" type="text"
-        placeholder="Nhập key để tra cứu..."
-        autocomplete="off" spellcheck="false"
-        onkeydown="if(event.key==='Enter') doCheckKey()"/>
-      <button class="btn-ck" id="btn-ck" onclick="doCheckKey()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        Kiểm tra ngay
-      </button>
-    </div><!-- /tab-ck -->
-
-    <!-- Event box (chung 2 tab) -->
-    <div class="ev-box" id="ev-box" style="display:none">
-      <div class="ev-head">
-        <div class="ev-icon" id="ev-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-        </div>
-      </div>
-      <!-- Đóng -->
-      <div class="ev-body" id="ev-closed" style="display:none">
-        <div class="ev-row">
-          <span style="color:var(--muted);font-size:.78rem">Mở sau:</span>
-          <span class="ev-cd closed-cd" id="ev-cd-closed"></span>
-        </div>
-        <div id="ev-claimed-panel" style="display:none;margin-top:10px">
-          <div class="ev-claimed-box">
-            <span class="ev-claimed-key" id="ev-claimed-val"></span>
-            <button class="ev-paste-btn" onclick="evPasteKey()">Dùng key này</button>
-          </div>
-        </div>
-      </div>
-        </div>
-        <button class="btn-get-free" id="ev-btn-get" onclick="evGetFreeKey()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-          <span class="btn-get-free-texts">
-          </span>
-        </button>
-        <div id="ev-remaining" style="display:none;margin-top:8px;padding:6px 12px;border-radius:8px;background:rgba(134,239,172,.1);border:1px solid rgba(134,239,172,.25);color:#86efac;font-size:.74rem;font-weight:600;text-align:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#86efac" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Còn 1 lần lấy trong ngày</div>
-        <div class="ev-key-result" id="ev-key-result">
-          <div class="ev-key-val" id="ev-key-val"></div>
-          <div class="ev-key-exp" id="ev-key-exp"></div>
-          <button class="ev-copy-btn" onclick="evCopyKey()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Sao chép key
-          </button>
-        </div>
-        <div class="ev-key-result" id="ev-key-result2" style="display:none;margin-top:8px">
-          <div class="ev-key-val" id="ev-key-val2"></div>
-          <div class="ev-key-exp" id="ev-key-exp2"></div>
-          <button class="ev-copy-btn" onclick="evCopyKey2()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Sao chép key
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- History trigger (chung cả 2 tab) -->
-    <div class="hist-wrap">
-      <button class="hist-toggle" id="hist-toggle" onclick="openHistory()">
-        <span class="hist-toggle-left">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Lịch sử key đã dùng
-        </span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-
-    <!-- Divider + iOS (chung cả 2 tab) -->
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-txt">Cấu hình iOS</div>
-      <div class="divider-line"></div>
-    </div>
-    <a class="btn-ios disabled" id="btn-ios" href="#" onclick="iosClick(event)">
-      <div class="btn-ios-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 16V4"/>
-          <path d="M8 12l4 4 4-4"/>
-          <path d="M4 20h16"/>
-        </svg>
-      </div>
-      <div class="btn-ios-texts">
-        <div class="btn-ios-main">Tải cấu hình iOS</div>
-        <div class="btn-ios-sub" id="ios-sub">Kích hoạt key trước</div>
-      </div>
-      <svg class="btn-ios-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-    </a>
-    <div class="ios-warn" id="ios-warn">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" style="vertical-align:middle;margin-right:5px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Vui lòng dán key vào ô bên trên và bấm <b>Kích Hoạt Ngay</b> trước khi tải cấu hình!
-    </div>
-    <div class="ios-hint" id="ios-hint"></div>
-
-    <a class="btn-ios btn-video-guide" id="btn-video-guide" href="#" onclick="openVideoModal();return false;">
-      <div class="btn-ios-icon btn-video-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10" stroke="#f87171"/>
-          <polygon points="10 8 16 12 10 16 10 8" fill="#f87171" stroke="#f87171"/>
-        </svg>
-      </div>
-      <div class="btn-ios-texts">
-        <div class="btn-ios-main">Xem video hướng dẫn cài</div>
-        <div class="btn-ios-sub">Hướng dẫn từng bước · Dễ thực hiện</div>
-      </div>
-      <svg class="btn-ios-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-    </a>
-
-  </div><!-- .card -->
-  </div><!-- .card-outer -->
-
-<!-- Video guide modal -->
-<div class="video-modal-bg" id="video-modal-bg" onclick="closeVideoModal(event)">
-  <div class="video-modal-inner" onclick="event.stopPropagation()">
-    <video id="guide-video" controls playsinline preload="none"
-      src="/huongdan.mp4"
-      poster="">
-    </video>
+  <div class="note-box">
+    <span class="icon">💡</span>
+    <span>Duyệt IP + Device ID khi kích hoạt key nhé!</span>
   </div>
-  <button class="video-modal-close" onclick="closeVideoModal()">&#10005; Đóng video</button>
+
+  <form id="requestForm" novalidate>
+    <div class="field">
+      <input id="license" placeholder="🔑 Nhập key của bạn..." inputmode="text" autocapitalize="none" autocomplete="off" required />
+    </div>
+    <div class="row">
+      <button id="btnSubmit" class="btn" type="submit">Kích hoạt</button>
+      <button id="btnClearKey" class="btn btn-clear" type="button" title="Xóa key">✕</button>
+    </div>
+  </form>
+
+  <div id="statusPanel" class="status-panel">
+    <div class="stat-title"><span id="statusIcon">✔️</span> <span id="statusTitle">KEY ACTIVE</span></div>
+    <div id="statusIpMsg"></div>
+    <div class="status-grid">
+      <span class="sg-label">Trạng thái</span><span class="sg-value" id="sStatus">—</span>
+      <span class="sg-label">Loại key</span><span class="sg-value" id="sType">—</span>
+      <span class="sg-label">Kích hoạt</span><span class="sg-value" id="sCreated">—</span>
+      <span class="sg-label">Hết hạn</span><span class="sg-value" id="sExpires">—</span>
+    </div>
+  </div>
+
+  <div class="admin-box">
+    <span class="admin-title">👩‍💻 Admin</span>
+    <a class="admin-btn" target="_blank" href="https://t.me/vantrung23128">@vantrung23128</a>
+  </div>
+
+  <div class="footer">💕 NGUYEN TRUNG IOS • 2026 💕</div>
 </div>
 
-<!-- History modal -->
-<div class="hist-modal" id="hist-modal" onclick="backdropClose(event)">
-  <div class="hist-backdrop"></div>
-  <div class="hist-sheet">
-    <div class="hist-sheet-handle"></div>
-    <div class="hist-sheet-head">
-      <div class="hist-sheet-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Lịch sử Key Đã Dùng
-      </div>
-      <button class="hist-close" onclick="closeHistory()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="hist-body" id="hist-body" style="padding:14px 16px">
-      <div class="hist-empty" id="hist-empty">Đang tải…</div>
-    </div>
-    <div class="hist-bottom">
-      <div class="hist-hint">Nhấn Sao Chép để copy key · CẬP NHẬT IP tự động lấy IP hiện tại</div>
-      <button class="hist-close-btn" onclick="closeHistory()">ĐÓNG</button>
-    </div>
-  </div>
-</div>
-
-<!-- Result modal -->
-<div class="result-modal" id="result-modal">
-  <div class="hist-backdrop" onclick="closeResult()"></div>
-  <div class="result-sheet">
-    <div class="result-sheet-handle"></div>
-    <div id="r-stripe" class="result-stripe-ok"></div>
-    <div class="result-head">
-      <div class="result-icon-wrap" id="r-icon-wrap">
-        <svg id="r-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3a0" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <span class="result-title" id="r-title">Kích hoạt thành công!</span>
-      <button class="result-close" onclick="closeResult()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="result-body" id="r-body"></div>
-  </div>
-</div>
-
-<!-- Action sheet (sau kích hoạt thành công) -->
-<div class="action-modal" id="action-modal">
-  <div class="hist-backdrop" onclick="closeActionModal()"></div>
-  <div class="action-sheet">
-    <div class="action-handle"></div>
-    <div class="action-sheet-inner">
-      <div class="action-sheet-title">Xác nhận</div>
-      <button class="action-btn action-btn-ip" onclick="openIpModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-        Cập nhật IP
-      </button>
-      <button class="action-cancel" onclick="closeActionModal()">Hủy bỏ</button>
-    </div>
-  </div>
-</div>
-
-<!-- IP Update modal -->
-<div class="ipupd-modal" id="ipupd-modal">
-  <div class="hist-backdrop" onclick="closeIpModal()"></div>
-  <div class="ipupd-sheet">
-    <div class="action-handle"></div>
-    <div class="ipupd-inner">
-      <div class="ipupd-title">Cập nhật IP</div>
-      <div class="ipupd-sub">Vui lòng chọn phương thức</div>
-      <button class="ipupd-btn ipupd-btn-auto" id="ipupd-btn-auto" onclick="doAutoUpdateIp()">Tự động cập nhật</button>
-      <button class="ipupd-btn ipupd-btn-manual" onclick="toggleManualIp()">Nhập IP thủ công</button>
-      <div class="ipupd-manual-wrap" id="ipupd-manual-wrap">
-        <input class="ipupd-ip-inp" id="ipupd-ip-inp" type="text" placeholder="Ví dụ: 14.239.88.220"
-          autocomplete="off" spellcheck="false"
-          onkeydown="if(event.key==='Enter') doManualUpdateIp()"/>
-        <button class="ipupd-submit" id="ipupd-submit" onclick="doManualUpdateIp()">Xác nhận cập nhật</button>
-      </div>
-      <div class="ipupd-feedback" id="ipupd-feedback"></div>
-      <button class="ipupd-back" onclick="backToActionModal()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Quay lại
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Check-key modal -->
-<div class="result-modal" id="ck-modal">
-  <div class="hist-backdrop" onclick="closeCkModal()"></div>
-  <div class="result-sheet">
-    <div class="result-sheet-handle"></div>
-    <div class="result-head">
-      <div class="result-icon-wrap" id="ck-icon"></div>
-      <span class="result-title" id="ck-title"></span>
-      <button class="result-close" onclick="closeCkModal()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="result-body" id="ck-body"></div>
-  </div>
-</div>
-
-<!-- Activation toast container -->
-<div class="act-toast-wrap" id="act-toast-wrap"></div>
-
-<!-- Chat FAB -->
-<!-- BOT FAB + PANEL -->
-<div class="bot-fab-wrap">
-  <button class="bot-fab" onclick="toggleBot()" id="bot-fab" title="AI Hỗ trợ">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="3"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><circle cx="9" cy="14" r="1.2" fill="#fff" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="#fff" stroke="none"/><path d="M8 18h8"/><line x1="12" y1="2" x2="12" y2="5"/></svg>
-  </button>
-</div>
-<div class="bot-panel" id="bot-panel">
-  <div class="bot-head">
-    <div class="bot-head-avatar">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="3"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><circle cx="9" cy="14" r="1.2" fill="#fff" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="#fff" stroke="none"/><path d="M8 18h8"/></svg>
-    </div>
-    <div>
-      <div class="bot-head-name">AI Hỗ Trợ</div>
-      <div class="bot-head-sub">● Trực tuyến 24/7</div>
-    </div>
-    <button class="bot-close-btn" onclick="toggleBot()">✕</button>
-  </div>
-  <div class="bot-msgs" id="bot-msgs"></div>
-  <div class="bot-inp-wrap">
-    <input class="bot-inp" id="bot-inp" placeholder="Gửi key để reset thiết bị…" maxlength="200"
-      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendBot();}"/>
-    <button class="bot-send" id="bot-send" onclick="sendBot()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </div>
-</div>
-
-<div class="chat-ctx-menu" id="chat-ctx-menu">
-  <button class="chat-ctx-btn" onclick="_doReply()">↩&nbsp; Trả lời</button>
-</div>
-<div class="chat-fab-wrap">
-  <div class="chat-preview" id="chat-preview">
-    <div class="chat-preview-name" id="chat-preview-name"></div>
-    <div class="chat-preview-text" id="chat-preview-text"></div>
-  </div>
-  <button class="chat-fab" onclick="toggleChat()" id="chat-fab">
-    <img src="https://i.imgur.com/olfI3vw.jpeg" alt="chat"/>
-  </button>
-  <img class="chat-fab-border" src="https://raw.githubusercontent.com/WusThanhDieu/Profile-ThanhDieu.Com-V5-Tester/refs/heads/main/res/v5/img/crown/mong-vuot-rong.png" alt=""/>
-  <div class="chat-unread" id="chat-unread">0</div>
-</div>
-
-<!-- Chat Panel -->
-<div class="chat-panel" id="chat-panel">
-  <div class="chat-head">
-    <img class="chat-head-img" src="https://i.imgur.com/olfI3vw.jpeg" alt=""/>
-    <div class="chat-head-info">
-      <div class="chat-head-title">Chat Cộng Đồng</div>
-      <div class="chat-head-sub" id="chat-sub">● Đang kết nối…</div>
-    </div>
-    <button class="chat-rename-btn" id="chat-rename-btn" onclick="toggleRenamePopup()">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      Đổi tên
-    </button>
-    <button class="chat-close-btn" onclick="toggleChat()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-    <div class="chat-rename-popup" id="chat-rename-popup" style="display:none">
-      <input class="chat-rename-inp" id="chat-rename-inp" maxlength="20" placeholder="Tên hiển thị…"
-        onkeydown="if(event.key==='Enter') saveChatName()"/>
-      <button class="chat-rename-save" onclick="saveChatName()">Lưu</button>
-    </div>
-  </div>
-  <div class="chat-pin-bar" id="chat-pin-bar" onclick="scrollToPinned()"><svg class="chat-pin-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="chat-pin-label">Thông Báo:</span><span class="chat-pin-text" id="chat-pin-text"></span></div>
-  <div style="position:relative;flex:1;display:flex;flex-direction:column;min-height:0">
-    <div class="chat-msgs" id="chat-msgs">
-      <div class="chat-empty-msg" id="chat-empty">Chưa có tin nhắn nào. Hãy là người đầu tiên!</div>
-    </div>
-    <button id="chat-scroll-btn" onclick="_chatScrollBottom(true)" style="display:none;position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(30,30,40,.92);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:5px 14px;color:#fff;font-size:.72rem;font-weight:600;cursor:pointer;white-space:nowrap;backdrop-filter:blur(6px);z-index:10;display:flex;align-items:center;gap:5px">
-      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      Tin mới nhất
-    </button>
-  </div>
-  <div class="chat-reply-bar" id="chat-reply-bar">
-    <div class="chat-reply-bar-line"></div>
-    <div class="chat-reply-bar-content">
-      <div class="chat-reply-bar-name" id="chat-reply-bar-name"></div>
-      <div class="chat-reply-bar-text" id="chat-reply-bar-text"></div>
-    </div>
-    <button class="chat-reply-bar-close" onclick="_clearReply()">✕</button>
-  </div>
-  <div id="chat-lock-notice" style="display:none;padding:10px 0 4px;text-align:center">
-    <div style="display:inline-flex;align-items:center;gap:7px;color:#f87171;font-size:.82rem;font-weight:700">
-      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-      Admin đang tắt chat cộng đồng
-    </div>
-    <div style="font-size:.72rem;color:#666;margin-top:3px">Vui lòng chờ admin mở lại</div>
-  </div>
-  <div id="chat-inp-wrap" class="chat-inp-wrap" style="position:relative">
-    <div class="emoji-picker-wrap">
-      <button class="chat-tool-btn" onclick="toggleEmojiPicker(event)" title="Emoji">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-      </button>
-      <div class="emoji-picker" id="emoji-picker">
-        😀 😂 🤣 😅 😊 😇 🥰 😍 😎 🤩 😜 😭 😱 🥹 😤 😈
-        👍 👎 👏 🙏 💪 ✌️ 🤞 🫡 👀 🫶 🤦 🙄 🥳 😴 🤯 🫠
-        ❤️ 💔 💕 🔥 💯 💎 👑 🚀 ⚡ 🏆 🎮 🎯 💀 🤡 🌟 ✨
-        😩 😋 🤔 😏 🥺 😬 🤐 😶 😑 🙃 😤 😠 😡 🤬 🤫 🫥
-      </div>
-    </div>
-    <button class="chat-tool-btn" onclick="document.getElementById('chat-img-input').click()" title="Gửi ảnh">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-    </button>
-    <input type="file" id="chat-img-input" accept="image/*" style="display:none" onchange="onChatImgSelected(this)"/>
-    <input class="chat-inp" id="chat-inp" placeholder="Nhập tin nhắn…" maxlength="300"
-      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"/>
-    <button class="chat-send" id="chat-send" onclick="sendChat()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </div>
-</div>
-
-<!-- Chat image choice -->
-<div class="chat-ic-modal" id="chat-ic-modal">
-  <div class="chat-ic-backdrop" onclick="closeChatImgChoice()"></div>
-  <div class="chat-ic-sheet">
-    <div class="action-handle"></div>
-    <div class="chat-ic-inner">
-      <div class="chat-ic-title">Chọn hành động</div>
-      <button class="chat-ic-btn accent" onclick="chooseSetAvatar()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        Đặt làm ảnh đại diện
-      </button>
-      <button class="chat-ic-btn" onclick="chooseSendImg()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Gửi ảnh vào chat
-      </button>
-      <button class="chat-ic-cancel" onclick="closeChatImgChoice()">Hủy bỏ</button>
-    </div>
-  </div>
-</div>
-
-<!-- Lightbox -->
-<div class="chat-lightbox" id="chat-lightbox" onclick="closeLightbox()">
-  <button class="chat-lightbox-close" onclick="closeLightbox()">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-  </button>
-  <img id="chat-lightbox-img" src="" alt=""/>
-</div>
+<div id="popup" class="popup"></div>
 
 <script>
-// ── Device ID — random UUID per browser (canvas fingerprint bị trùng trên iOS cùng model) ──
-function _generateFP(){
-  var arr = new Uint8Array(20);
-  crypto.getRandomValues(arr);
-  var hex = Array.from(arr).map(function(b){ return ('0'+b.toString(16)).slice(-2); }).join('');
-  return 'fp-'+hex;
+const ipEl = document.getElementById('ip');
+const deviceIdEl = document.getElementById('deviceId');
+const formEl = document.getElementById('requestForm');
+const btnSubmit = document.getElementById('btnSubmit');
+const btnClearKey = document.getElementById('btnClearKey');
+const licenseInput = document.getElementById('license');
+const popupEl = document.getElementById('popup');
+const statusPanel = document.getElementById('statusPanel');
+const SAVED_KEY = 'ff_cute_key_v5';
+
+function loadSaved() {
+  try { const v = localStorage.getItem(SAVED_KEY); if(v) licenseInput.value = v; } catch(e) {}
+}
+loadSaved();
+function saveKey(k) { try { localStorage.setItem(SAVED_KEY,k); } catch(e) {} }
+
+function showPopup(text, isError=false) {
+  popupEl.textContent = text;
+  popupEl.className = 'popup show' + (isError ? ' error' : '');
+  clearTimeout(window._pt);
+  window._pt = setTimeout(() => { popupEl.classList.remove('show'); }, 3800);
 }
 
-var _hwid = '';
-var _ip   = '';
+async function sha256(text) {
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
 
-(async function init(){
-  // IP từ server
-  try{
-    const r = await fetch('/my-ip');
+function getFingerprintParts() {
+  const n=navigator||{}, s=window.screen||{}, tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
+  return [n.userAgent||'', n.platform||'', n.vendor||'', n.language||'', (n.languages||[]).join(','),
+          String(n.hardwareConcurrency||''), String(n.deviceMemory||''), String(n.maxTouchPoints||''),
+          String(s.width||''), String(s.height||''), String(s.colorDepth||''),
+          String(window.devicePixelRatio||''), tz, navigator.plugins.length || ''].join('|');
+}
+
+async function getDeviceId() {
+  const key='device_fp_v6';
+  let id = localStorage.getItem(key);
+  if(id) { deviceIdEl.textContent = id; return id; }
+  try {
+    const raw = getFingerprintParts();
+    const hash = await sha256(raw);
+    id = 'DEV-'+hash.slice(0,36).toUpperCase();
+    localStorage.setItem(key,id);
+    deviceIdEl.textContent = id;
+    return id;
+  } catch(e) {
+    id = 'DEV-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,5).toUpperCase();
+    localStorage.setItem(key,id);
+    deviceIdEl.textContent = id;
+    return id;
+  }
+}
+
+async function getIP() {
+  try {
+    const r = await fetch('/whoami');
     const d = await r.json();
-    _ip = d.ip || '';
-    document.getElementById('chip-ip').textContent = _ip || '—';
-  } catch(e){
-    document.getElementById('chip-ip').textContent = '—';
+    if(d && d.ip) { ipEl.textContent=d.ip; return d.ip; }
+  } catch(e) {}
+  try {
+    const r = await fetch('https://api.ipify.org?format=json');
+    const d = await r.json();
+    ipEl.textContent=d.ip||'N/A';
+    return d.ip;
+  } catch(e) {
+    ipEl.textContent='N/A';
+    return null;
   }
+}
 
-  // HWID
-  try{
-    _hwid = localStorage.getItem('pdelta_hwid') || '';
-    if(!_hwid || _hwid.startsWith('DEV-') || _hwid.length < 10){
-      _hwid = await _generateFP();
-      localStorage.setItem('pdelta_hwid', _hwid);
-    }
-  } catch(e){
-    _hwid = await _generateFP();
-  }
-  var short = _hwid.length > 20 ? _hwid.slice(0,10)+'...'+_hwid.slice(-6) : _hwid;
-  document.getElementById('chip-hwid').textContent = short;
-})();
+let currentIP = null;
+let currentDeviceId = null;
+Promise.all([getIP(), getDeviceId()]).then(([ip, dev]) => {
+  currentIP = ip;
+  currentDeviceId = dev;
+});
 
-// ── Activate ─────────────────────────────────────────────────────────────────
-async function doActivate(){
-  var key = document.getElementById('key-inp').value.trim();
-  if(!key){ showErr('Vui lòng nhập key của bạn'); return; }
-
-  var btn = document.getElementById('btn-act');
-  btn.disabled = true;
-  document.getElementById('btn-act-inner').innerHTML = '<span class="spin">⟳</span> Đang kiểm tra…';
-
-  try{
-    var old_hwid = localStorage.getItem('pdelta_hwid_legacy') || '';
-    var res = await fetch('/activate-api', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({key: key, hwid: _hwid, old_hwid: old_hwid})
-    });
-    var d = await res.json();
-
-    if(d.ok || d.goto_menu){
-      showOk(d, key);
-      localStorage.setItem('pdelta_hwid', _hwid);
-      _activated = true;
-      document.getElementById('ios-warn').classList.remove('show');
-      _histLoaded = false;
-      var iosUrl = '/ios-config.mobileconfig?key=' + encodeURIComponent(key) + '&hwid=' + encodeURIComponent(_hwid);
-      var btnIos = document.getElementById('btn-ios');
-      if(btnIos){ btnIos.href=iosUrl; btnIos.target='_self'; btnIos.onclick=null; btnIos.classList.remove('disabled'); }
-      var iosSub = document.getElementById('ios-sub');
-      if(iosSub) iosSub.textContent = 'Nhấn để tải · ProxyVipFF.Click.mobileconfig';
-      var iosHint = document.getElementById('ios-hint');
-      if(iosHint) iosHint.textContent = 'Mở bằng Safari → Cài đặt → Đã tải về profile → Cài đặt';
-      if(d.need_create_password){
-        _lastActivateOk = false; // pw modal tự mở action modal
-        setTimeout(function(){ openPwCreateModal(key); }, 550);
-      }
-    } else if(d.need_verify_password){
-      _resetBtn();
-      _pwVerifyKey = key;
-      openPwVerifyModal();
-    } else if(d.need_2fa){
-      _resetBtn();
-      showErr('Key này yêu cầu mã 2FA — vui lòng dùng trang chính để kích hoạt.');
+async function loadKeyStatus(key) {
+  if(!key) { statusPanel.style.display='none'; return; }
+  try {
+    const r = await fetch('/api/key-status?key='+encodeURIComponent(key));
+    const d = await r.json();
+    statusPanel.style.display='block';
+    const now = Math.floor(Date.now()/1000);
+    const expired = d.expires_at && d.expires_at < now;
+    const titleEl = document.getElementById('statusTitle');
+    const iconEl = document.getElementById('statusIcon');
+    if(expired) {
+      titleEl.textContent = 'KEY HẾT HẠN 💔';
+      titleEl.style.color='#ef5350';
+      iconEl.textContent='💔';
     } else {
-      _resetBtn();
-      showErr(d.msg || 'Kích hoạt thất bại');
+      titleEl.textContent = 'KEY ACTIVE 💖';
+      titleEl.style.color='#6a1b4d';
+      iconEl.textContent='💖';
     }
-  } catch(e){
-    _resetBtn();
-    showErr('key sai — vui lòng thử lại');
+    document.getElementById('sStatus').textContent = expired ? 'Hết hạn' : (d.active ? (d.ip_whitelisted ? 'Hoạt động' : 'Chờ IP') : 'Chưa kích hoạt');
+    document.getElementById('sType').textContent = d.key_type || '—';
+    document.getElementById('sCreated').textContent = d.created_at ? new Date(d.created_at).toLocaleString('vi-VN') : '—';
+    document.getElementById('sExpires').textContent = d.expires_at ? new Date(d.expires_at*1000).toLocaleString('vi-VN') : 'Không giới hạn';
+    const ipMsg = document.getElementById('statusIpMsg');
+    if(d.ip_whitelisted) { ipMsg.textContent='✅ IP + Device đã active'; ipMsg.style.color='#43a047'; }
+    else if(d.active) { ipMsg.textContent='⚠️ Cần active IP & Device'; ipMsg.style.color='#f9a825'; }
+    else { ipMsg.textContent=''; }
+  } catch(e) {
+    statusPanel.style.display='none';
   }
 }
 
-function _resetBtn(){
-  var btn = document.getElementById('btn-act');
-  btn.disabled = false;
-  document.getElementById('btn-act-inner').innerHTML =
-    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Kích Hoạt Ngay';
-}
+const savedKey = (()=>{ try{return localStorage.getItem(SAVED_KEY);}catch(e){return null;} })();
+if(savedKey) loadKeyStatus(savedKey);
 
-var _ICONS = {
-  key:   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>',
-  ip:    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>',
-  dev:   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-linecap="round" stroke-width="2.5"/></svg>',
-  time:  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-  cal:   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
-};
+btnClearKey.addEventListener('click', ()=>{
+  try{ localStorage.removeItem(SAVED_KEY); }catch(e){}
+  licenseInput.value='';
+  statusPanel.style.display='none';
+  showPopup('Đã xóa key 🧹', false);
+});
 
-var _lastActivatedKey = '';
-var _lastActivateOk = false;
-
-function openResult(){
-  var modal = document.getElementById('result-modal');
-  modal.classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeResult(){
-  var modal = document.getElementById('result-modal');
-  modal.classList.remove('show');
-  document.body.style.overflow = '';
-  if(_lastActivateOk){
-    _lastActivateOk = false;
-    setTimeout(function(){ openActionModal(); }, 200);
-  }
-}
-
-function openActionModal(){
-  document.getElementById('action-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeActionModal(){
-  document.getElementById('action-modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function openIpModal(){
-  document.getElementById('action-modal').classList.remove('open');
-  // Reset IP modal state
-  document.getElementById('ipupd-manual-wrap').style.display = 'none';
-  document.getElementById('ipupd-feedback').style.display = 'none';
-  document.getElementById('ipupd-feedback').className = 'ipupd-feedback';
-  document.getElementById('ipupd-btn-auto').disabled = false;
-  document.getElementById('ipupd-btn-auto').textContent = 'Tự động cập nhật';
-  setTimeout(function(){
-    document.getElementById('ipupd-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }, 100);
-}
-function closeIpModal(){
-  document.getElementById('ipupd-modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function backToActionModal(){
-  document.getElementById('ipupd-modal').classList.remove('open');
-  setTimeout(function(){ openActionModal(); }, 100);
-}
-function toggleManualIp(){
-  var wrap = document.getElementById('ipupd-manual-wrap');
-  var showing = wrap.style.display === 'block';
-  wrap.style.display = showing ? 'none' : 'block';
-  if(!showing){
-    var inp = document.getElementById('ipupd-ip-inp');
-    inp.value = _ip || '';
-    setTimeout(function(){ inp.focus(); inp.select(); }, 100);
-  }
-}
-async function doAutoUpdateIp(){
-  var btn = document.getElementById('ipupd-btn-auto');
-  btn.disabled = true;
-  btn.textContent = '⟳ Đang lấy IP…';
-  var freshIp = '';
-  try{
-    var r = await fetch('/my-ip');
-    var d = await r.json();
-    freshIp = d.ip || '';
-  } catch(e){}
-  if(!freshIp){
-    var fb = document.getElementById('ipupd-feedback');
-    fb.style.display = 'block';
-    fb.className = 'ipupd-feedback err';
-    fb.textContent = 'Không lấy được IP hiện tại, vui lòng nhập thủ công';
-    btn.disabled = false;
-    btn.textContent = 'Tự động cập nhật';
-    return;
-  }
-  btn.textContent = '⟳ Đang cập nhật…';
-  await _doUpdateIp(freshIp);
-  btn.disabled = false;
-  btn.textContent = 'Tự động cập nhật';
-}
-async function doManualUpdateIp(){
-  var ip = document.getElementById('ipupd-ip-inp').value.trim();
-  if(!ip){ document.getElementById('ipupd-ip-inp').focus(); return; }
-  var btn = document.getElementById('ipupd-submit');
-  btn.disabled = true;
-  btn.textContent = '⟳ Đang cập nhật…';
-  await _doUpdateIp(ip);
-  btn.disabled = false;
-  btn.textContent = 'Xác nhận cập nhật';
-}
-async function _doUpdateIp(newIp){
-  var fb = document.getElementById('ipupd-feedback');
-  try{
-    var r = await fetch('/update-ip', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({hwid:_hwid, key:_lastActivatedKey, ip:newIp})
-    });
-    var d = await r.json();
-    fb.style.display = 'block';
-    if(d.ok){
-      fb.className = 'ipupd-feedback ok';
-      fb.textContent = 'Đã cập nhật IP thành: ' + (d.new_ip || newIp);
-      _ip = newIp;
-      document.getElementById('chip-ip').textContent = newIp;
-      setTimeout(function(){ closeIpModal(); }, 2000);
-    } else {
-      fb.className = 'ipupd-feedback err';
-      fb.textContent = d.msg || 'Cập nhật thất bại';
-    }
-  } catch(e){
-    fb.style.display = 'block';
-    fb.className = 'ipupd-feedback err';
-    fb.textContent = 'Lỗi kết nối, vui lòng thử lại';
-  }
-}
-
-function showOk(d, key){
-  _resetBtn();
-  _lastActivatedKey = key;
-  _lastActivateOk = true;
-  var stripe = document.getElementById('r-stripe');
-  var wrap   = document.getElementById('r-icon-wrap');
-  var svg    = document.getElementById('r-icon-svg');
-  var title  = document.getElementById('r-title');
-  var body   = document.getElementById('r-body');
-
-  stripe.className = 'result-stripe-ok';
-  wrap.className   = 'result-icon-wrap ok-wrap';
-  svg.setAttribute('stroke','#22d3a0');
-  svg.innerHTML    = '<polyline points="20 6 9 17 4 12"/>';
-  title.className  = 'result-title ok-color';
-  title.textContent = 'Kích hoạt thành công!';
-
-  var rows = [
-    [_ICONS.key,  'Key',         key,                                        'blue'],
-    [_ICONS.ip,   'IP của bạn',  _ip || '—',                                 'blue'],
-    [_ICONS.dev,  'Device ID',   _hwid.slice(0,14)+'…',                      ''],
-    [_ICONS.time, 'Thời hạn',    d.remaining || d.msg || 'Đã kích hoạt',    'green'],
-    [_ICONS.cal,  'Hết hạn',     d.expires   || 'Vĩnh viễn',                'yellow'],
-  ];
-
-  body.innerHTML = rows.map(function(r){
-    return '<div class="info-row">'
-      +'<span class="info-key">'+r[0]+r[1]+'</span>'
-      +'<span class="info-val '+(r[3]||'')+'">'+_esc(r[2])+'</span>'
-      +'</div>';
-  }).join('');
-
-  openResult();
-}
-
-function showErr(msg){
-  var stripe = document.getElementById('r-stripe');
-  var wrap   = document.getElementById('r-icon-wrap');
-  var svg    = document.getElementById('r-icon-svg');
-  var title  = document.getElementById('r-title');
-  var body   = document.getElementById('r-body');
-
-  stripe.className = 'result-stripe-err';
-  wrap.className   = 'result-icon-wrap err-wrap';
-  svg.setAttribute('stroke','#f87171');
-  svg.innerHTML    = '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
-  title.className  = 'result-title err-color';
-  title.textContent = 'Kích hoạt thất bại';
-  body.innerHTML   = '<div class="result-err-msg">'+_esc(msg)+'</div>';
-
-  openResult();
-}
-
-function _esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ── PASSWORD ──────────────────────────────────────────────────────────────────
-var _pwCreateKey = '';
-var _pwVerifyKey = '';
-
-function openPwCreateModal(key){
-  _pwCreateKey = key;
-  document.getElementById('pw-c1').value='';
-  document.getElementById('pw-c2').value='';
-  document.getElementById('pw-create-err').textContent='';
-  document.getElementById('pw-create-btn').disabled=false;
-  document.getElementById('pw-create-modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('pw-c1').focus(); }, 200);
-}
-
-function skipPwCreate(){
-  document.getElementById('pw-create-modal').classList.remove('open');
-  openActionModal();
-}
-
-async function doPwCreate(){
-  var p1=document.getElementById('pw-c1').value;
-  var p2=document.getElementById('pw-c2').value;
-  var err=document.getElementById('pw-create-err');
-  var btn=document.getElementById('pw-create-btn');
-  if(p1.length<6){ err.textContent='Mật khẩu phải có ít nhất 6 ký tự'; return; }
-  if(p1!==p2){ err.textContent='Mật khẩu nhập lại không khớp'; return; }
-  btn.disabled=true; err.textContent='';
-  try{
-    var r=await fetch('/set-password',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({key:_pwCreateKey,hwid:_hwid,password:p1})});
-    var d=await r.json();
-    if(d.ok){
-      document.getElementById('pw-create-modal').classList.remove('open');
-      openActionModal();
-    } else {
-      err.textContent=d.msg||'Lỗi — vui lòng thử lại';
-      btn.disabled=false;
-    }
-  }catch(e){ err.textContent='Lỗi kết nối — vui lòng thử lại'; btn.disabled=false; }
-}
-
-var _pwVerifyPwd = '';
-
-function openPwVerifyModal(){
-  _pwVerifyPwd='';
-  document.getElementById('pw-v1').value='';
-  document.getElementById('pw-verify-err').textContent='';
-  document.getElementById('pw-verify-btn').disabled=false;
-  document.getElementById('pw-verify-modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('pw-v1').focus(); }, 200);
-}
-
-function closePwVerifyModal(){
-  document.getElementById('pw-verify-modal').classList.remove('open');
-  _resetBtn();
-}
-
-function _pwVerifySuccess(d){
-  document.getElementById('pw-verify-modal').classList.remove('open');
-  showOk(d, _pwVerifyKey);
-  localStorage.setItem('pdelta_hwid', _hwid);
-  _activated=true;
-  var iosUrl='/ios-config.mobileconfig?key='+encodeURIComponent(_pwVerifyKey)+'&hwid='+encodeURIComponent(_hwid);
-  var btnIos=document.getElementById('btn-ios');
-  if(btnIos){ btnIos.href=iosUrl; btnIos.target='_self'; btnIos.onclick=null; btnIos.classList.remove('disabled'); }
-  var iosSub=document.getElementById('ios-sub');
-  if(iosSub) iosSub.textContent='Nhấn để tải · ProxyVipFF.Click.mobileconfig';
-}
-
-async function doPwVerify(){
-  var p=document.getElementById('pw-v1').value;
-  var err=document.getElementById('pw-verify-err');
-  var btn=document.getElementById('pw-verify-btn');
-  if(!p){ err.textContent='Vui lòng nhập mật khẩu'; return; }
-  btn.disabled=true; err.textContent='';
-  try{
-    var r=await fetch('/verify-password',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({key:_pwVerifyKey,hwid:_hwid,password:p})});
-    var d=await r.json();
-    if(d.ok){
-      _pwVerifySuccess(d);
-    } else {
-      err.textContent=d.msg||'Sai mật khẩu — vui lòng thử lại';
-      btn.disabled=false;
-    }
-  }catch(e){ err.textContent='Lỗi kết nối — vui lòng thử lại'; btn.disabled=false; }
-}
-
-// ── Online count ──────────────────────────────────────────────────────────────
-async function fetchOnline(){
-  try{
-    var r = await fetch('/online-count');
-    var d = await r.json();
-    if(d.ok){
-      document.getElementById('online-num').textContent = d.hwids;
-    }
-  } catch(e){}
-}
-fetchOnline();
-setInterval(fetchOnline, 10000);
-
-// ── Tabs ─────────────────────────────────────────────────────────────────────
-function switchTab(name){
-  ['gd','ck'].forEach(function(t){
-    document.getElementById('tab-'+t).classList.toggle('active', t===name);
-    document.getElementById('tab-btn-'+t).classList.toggle('active', t===name);
-  });
-}
-
-// ── Event Key Free ────────────────────────────────────────────────────────────
-var _evLastSlot = null;
-
-function _evVNTime(){
-  var vn = new Date(Date.now() + 7*3600*1000);
-  return {h: vn.getUTCHours(), m: vn.getUTCMinutes(), s: vn.getUTCSeconds()};
-}
-function _evIsOpen(h, m){ return true; }
-function _evSecsToNext(h, m, s){
-  var evs = [12*3600, 20*3600], cur = h*3600+m*60+s;
-  for(var i=0;i<evs.length;i++){ if(evs[i]>cur) return evs[i]-cur; }
-  return (24*3600-cur)+evs[0];
-}
-function _evSecsLeft(h, m, s){ return 10*60-(m*60+s); }
-function _evPad(n){ return n<10?'0'+n:''+n; }
-function _evFmt(sec){
-  var h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;
-  if(h>0) return _evPad(h)+':'+_evPad(m)+':'+_evPad(s);
-  return _evPad(m)+':'+_evPad(s);
-}
-function _evSlot(){
-  var today=new Date(Date.now()+7*3600*1000).toISOString().slice(0,10);
-  if(!localStorage.getItem('free_key_claimed_1_'+today)) return '1';
-  if(!localStorage.getItem('free_key_claimed_2_'+today)) return '2';
-  return 'done';
-}
-function _evGetClaimed(slot){
-  var today = new Date(Date.now()+7*3600*1000).toISOString().slice(0,10);
-  try{ return JSON.parse(localStorage.getItem('free_key_claimed_'+slot+'_'+today)||'null'); }catch(e){ return null; }
-}
-function _evSetClaimed(slot, data){
-  var today = new Date(Date.now()+7*3600*1000).toISOString().slice(0,10);
-  localStorage.setItem('free_key_claimed_'+slot+'_'+today, JSON.stringify(data));
-}
-
-function evTick(){
-  var t = _evVNTime();
-  var box = document.getElementById('ev-box');
-  if(!box) return;
-  box.style.display = 'block';
-  var slot = _evSlot();
-  var claimed = _evGetClaimed(slot);
-  var slotChanged = slot !== _evLastSlot;
-  if(slotChanged) _evLastSlot = slot;
-
-  var openDiv   = document.getElementById('ev-open');
-  var closedDiv = document.getElementById('ev-closed');
-  var livePill  = document.getElementById('ev-live-pill');
-  var liveText  = document.getElementById('ev-live-text');
-  var subN = document.getElementById('ev-sub-normal');
-  var subC = document.getElementById('ev-sub-claimed');
-  var icon = document.getElementById('ev-icon');
-
-  if(_evIsOpen(t.h, t.m)){
-    openDiv.style.display   = 'block';
-    closedDiv.style.display = 'none';
-    if(livePill) livePill.style.display = 'inline-block';
-    if(liveText) liveText.style.display = 'inline-block';
-    var cd = document.getElementById('ev-cd-open');
-    if(cd) cd.style.display='none';
-    var btn = document.getElementById('ev-btn-get');
-    var remaining = document.getElementById('ev-remaining');
-    var kr=document.getElementById('ev-key-result');
-    var kv=document.getElementById('ev-key-val');
-    var ke=document.getElementById('ev-key-exp');
-    if(slot==='done'){
-      if(remaining) remaining.style.display='none';
-      if(subN) subN.style.display='none';
-      if(subC) subC.style.display='block';
-      if(btn){
-        btn.style.display='flex'; btn.disabled=true; btn.style.opacity='1';
-        btn.style.background='linear-gradient(135deg,#7f1d1d,#991b1b)';
-        btn.style.borderColor='rgba(239,68,68,.4)';
-        btn.style.cursor='not-allowed';
-        var bMain=btn.querySelector('.btn-get-free-main');
-        var bSub=btn.querySelector('.btn-get-free-sub');
-        if(bMain) bMain.textContent='Đã lấy đủ 2 key hôm nay';
-        if(bSub) bSub.textContent='Quay lại vào ngày mai';
-        var bIco=btn.querySelector('svg'); if(bIco) bIco.setAttribute('stroke','#fca5a5');
-      }
-      var c1d=_evGetClaimed('1'),c2d=_evGetClaimed('2');
-      var kr2=document.getElementById('ev-key-result2'),kv2=document.getElementById('ev-key-val2'),ke2=document.getElementById('ev-key-exp2');
-      if(c1d&&kr){kr.style.display='block';if(kv)kv.textContent=c1d.key;if(ke&&c1d.expires)ke.textContent='Hết hạn: '+c1d.expires;}
-      if(c2d&&kr2){kr2.style.display='block';if(kv2)kv2.textContent=c2d.key;if(ke2&&c2d.expires)ke2.textContent='Hết hạn: '+c2d.expires;}
-    } else if(slot==='2'){
-      if(btn){ btn.style.display='flex'; btn.disabled=false; btn.style.opacity='1'; }
-      if(remaining) remaining.style.display='block';
-      var c1=_evGetClaimed('1');
-      var kr2s2=document.getElementById('ev-key-result2');if(kr2s2)kr2s2.style.display='none';
-      if(c1 && kr){ kr.style.display='block'; if(kv&&!kv.textContent.trim()) kv.textContent=c1.key; if(ke&&!ke.textContent.trim()&&c1.expires) ke.textContent='Hết hạn: '+c1.expires; }
-    } else {
-      if(btn){ btn.style.display='flex'; btn.disabled=false; btn.style.opacity='1'; }
-      if(slotChanged){
-        var kr=document.getElementById('ev-key-result'); if(kr) kr.style.display='none';
-        var kr2s1=document.getElementById('ev-key-result2');if(kr2s1)kr2s1.style.display='none';
-      }
-    }
-    // Reset icon/sub
-    if(icon){ icon.className='ev-icon'; icon.querySelector('svg').setAttribute('stroke','#fff'); }
-    if(subN) subN.style.display='';
-    if(subC) subC.style.display='none';
-  } else {
-    openDiv.style.display   = 'none';
-    closedDiv.style.display = 'block';
-    if(livePill) livePill.style.display='none';
-    if(liveText) liveText.style.display='none';
-    var cd2 = document.getElementById('ev-cd-closed');
-    if(cd2) cd2.textContent = _evFmt(_evSecsToNext(t.h, t.m, t.s));
-    var claimPanel = document.getElementById('ev-claimed-panel');
-    var claimVal   = document.getElementById('ev-claimed-val');
-    if(claimed){
-      if(claimPanel){ claimPanel.style.display='block'; }
-      if(claimVal)   claimVal.textContent = claimed.key;
-      if(icon){ icon.className='ev-icon claimed'; icon.querySelector('svg').setAttribute('stroke','#f87171'); }
-      if(subN) subN.style.display='none';
-      if(subC) subC.style.display='block';
-    } else {
-      if(claimPanel) claimPanel.style.display='none';
-      if(icon){ icon.className='ev-icon'; icon.querySelector('svg').setAttribute('stroke','#fff'); }
-      if(subN) subN.style.display='';
-      if(subC) subC.style.display='none';
-    }
-  }
-}
-
-async function evGetFreeKey(){
-  var btn = document.getElementById('ev-btn-get');
-  if(btn){ btn.disabled=true; btn.style.opacity='.5'; }
-  try{
-    var hwid = _hwid || localStorage.getItem('pdelta_hwid') || '';
-    var res = await fetch('/get-free-key',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hwid:hwid})});
-    var d = await res.json();
-    if(d.pending){
-      // Lưu pending vào localStorage, redirect qua layma
-      localStorage.setItem('ev_pending', JSON.stringify({slot:d.slot, date:d.date, hwid:hwid}));
-      if(btn) btn.style.display='none';
-      window.location.href = d.redirect;
-    } else if(d.success){
-      _evSetClaimed(_evSlot(), {key:d.key, expires:d.expires});
-      if(btn) btn.style.display='none';
-      var kr=document.getElementById('ev-key-result');
-      var kv=document.getElementById('ev-key-val');
-      var ke=document.getElementById('ev-key-exp');
-      if(kr) kr.style.display='block';
-      if(kv) kv.textContent = d.key;
-      if(ke) ke.textContent = 'Hết hạn: '+d.expires;
-    } else if(d.cooldown){
-      // Cooldown 5 giây toàn server — hiện đếm ngược, nút tự mở lại
-      var wait = d.wait || 5;
-      var parent = btn ? btn.parentNode : document.getElementById('ev-open');
-      var msg = document.createElement('div');
-      msg.style.cssText='margin-top:7px;padding:7px 10px;border-radius:9px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;font-size:.72rem;font-weight:600;text-align:center';
-      msg.className='ev-err';
-      if(parent){ var old=parent.querySelector('.ev-err'); if(old) old.remove(); parent.appendChild(msg); }
-      var _cd = wait;
-      function _tick(){
-        msg.textContent = '⏳ Hệ thống đang xử lý, vui lòng chờ ' + _cd + ' giây...';
-        if(_cd <= 0){
-          msg.remove();
-          if(btn){ btn.disabled=false; btn.style.opacity='1'; }
-        } else { _cd--; setTimeout(_tick, 1000); }
-      }
-      _tick();
-    } else {
-      if(btn){ btn.disabled=false; btn.style.opacity='1'; }
-      var msg=document.createElement('div');
-      msg.style.cssText='margin-top:7px;padding:7px 10px;border-radius:9px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;font-size:.72rem;font-weight:600;text-align:center';
-      msg.textContent = d.message || 'Bạn đã lấy key slot này rồi!';
-      var parent = btn ? btn.parentNode : document.getElementById('ev-open');
-      if(parent){ var old=parent.querySelector('.ev-err'); if(old) old.remove(); msg.className='ev-err'; parent.appendChild(msg); setTimeout(function(){msg.remove();},4000); }
-    }
-  } catch(e){
-    if(btn){ btn.disabled=false; btn.style.opacity='1'; }
-  }
-}
-
-function evCopyKey(){
-  var v = document.getElementById('ev-key-val');
-  if(!v) return;
-  navigator.clipboard.writeText(v.textContent.trim()).catch(function(){});
-}
-function evCopyKey2(){
-  var v = document.getElementById('ev-key-val2');
-  if(!v) return;
-  navigator.clipboard.writeText(v.textContent.trim()).catch(function(){});
-}
-
-function evPasteKey(){
-  var v = document.getElementById('ev-claimed-val');
-  if(!v) return;
-  var inp = document.getElementById('key-inp');
-  if(inp){ inp.value = v.textContent.trim(); inp.focus(); }
-}
-
-evTick();
-setInterval(evTick, 1000);
-
-// Sau khi user vượt layma → quay về → gọi /claim-free-key để lấy key thật
-(function(){
-  var _pend = null;
-  try{ _pend = JSON.parse(localStorage.getItem('ev_pending')||'null'); }catch(e){}
-  if(!_pend) return;
-  localStorage.removeItem('ev_pending');
-  var _hwid = _pend.hwid || (window._hwid || localStorage.getItem('pdelta_hwid') || '');
-  function _doClaim(){
-    fetch('/claim-free-key',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({hwid:_hwid, date:_pend.date, slot:_pend.slot})
-    }).then(function(r){ return r.json(); }).then(function(d){
-      if(d.success){
-        _evSetClaimed(_pend.slot, {key:d.key, expires:d.expires});
-        var kr=document.getElementById('ev-key-result');
-        var kv=document.getElementById('ev-key-val');
-        var ke=document.getElementById('ev-key-exp');
-        var btn=document.getElementById('ev-btn-get');
-        var remaining=document.getElementById('ev-remaining');
-        var subN=document.getElementById('ev-sub-normal');
-        var subC=document.getElementById('ev-sub-claimed');
-        var evOpen=document.getElementById('ev-open');
-        if(_pend.slot==='2'){
-          var _c1p=_evGetClaimed('1');
-          var _kr2p=document.getElementById('ev-key-result2'),_kv2p=document.getElementById('ev-key-val2'),_ke2p=document.getElementById('ev-key-exp2');
-          if(_c1p&&kr){kr.style.display='block';if(kv)kv.textContent=_c1p.key;if(ke&&_c1p.expires)ke.textContent='Hết hạn: '+_c1p.expires;}
-          if(_kr2p){_kr2p.style.display='block';if(_kv2p)_kv2p.textContent=d.key;if(_ke2p)_ke2p.textContent='Hết hạn: '+d.expires;}
-        } else {
-          if(kr) kr.style.display='block';
-          if(kv) kv.textContent=d.key;
-          if(ke) ke.textContent='Hết hạn: '+d.expires;
-        }
-        var nextSlot=_evSlot();
-        if(nextSlot==='done'){
-          if(btn) btn.style.display='none';
-          if(remaining) remaining.style.display='none';
-          if(subN) subN.style.display='none';
-          if(subC) subC.style.display='block';
-        } else {
-          if(btn){ btn.style.display='flex'; btn.disabled=false; btn.style.opacity='1'; }
-          if(remaining) remaining.style.display='block';
-        }
-        if(evOpen) setTimeout(function(){ evOpen.scrollIntoView({behavior:'smooth',block:'center'}); },300);
-      }
-    }).catch(function(){});
-  }
-  if(document.readyState==='complete'||document.readyState==='interactive'){
-    setTimeout(_doClaim, 500);
-  } else {
-    document.addEventListener('DOMContentLoaded', function(){ setTimeout(_doClaim, 500); });
-  }
-})();
-
-// ── Tra cứu key ──────────────────────────────────────────────────────────────
-async function doCheckKey(){
-  var inp = document.getElementById('ck-inp');
-  var key = inp ? inp.value.trim() : '';
-  if(!key){ inp && inp.focus(); return; }
-  var btn = document.getElementById('btn-ck');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin">⟳</span> Đang kiểm tra…';
-  try{
-    var r = await fetch('/check-key?key='+encodeURIComponent(key));
-    var d = await r.json();
-    if(d.ok){
-      var expired = d.expired;
-      document.getElementById('ck-icon').className = 'result-icon-wrap '+(expired?'err-wrap':'ok-wrap');
-      document.getElementById('ck-icon').innerHTML = expired
-        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
-        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3a0" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
-      document.getElementById('ck-title').className = 'result-title '+(expired?'err-color':'ok-color');
-      document.getElementById('ck-title').textContent = expired ? 'Key đã hết hạn' : 'Key hợp lệ';
-      var rows = [
-        ['<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>', 'Key', d.key, 'blue'],
-        ['<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-linecap="round" stroke-width="3"/></svg>', 'Device ID', d.hwid, ''],
-        ['<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>', 'IP đang dùng', d.ip, 'blue'],
-        ['<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>', 'Thời hạn', d.remaining||(expired?'Đã hết':'—'), expired?'':'green'],
-        ['<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>', 'Hết hạn', d.expires, expired?'':'yellow'],
-      ];
-      document.getElementById('ck-body').innerHTML = rows.map(function(rr){
-        return '<div class="info-row"><span class="info-key">'+rr[0]+rr[1]+'</span><span class="info-val '+(rr[3]||'')+'">'+_esc(rr[2])+'</span></div>';
-      }).join('');
-    } else {
-      document.getElementById('ck-icon').className = 'result-icon-wrap err-wrap';
-      document.getElementById('ck-icon').innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-      document.getElementById('ck-title').className = 'result-title err-color';
-      document.getElementById('ck-title').textContent = 'Không tìm thấy key';
-      document.getElementById('ck-body').innerHTML = '<div class="result-err-msg">'+_esc(d.msg||'Key không tồn tại')+'</div>';
-    }
-  } catch(e){
-    document.getElementById('ck-icon').className = 'result-icon-wrap err-wrap';
-    document.getElementById('ck-icon').innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-    document.getElementById('ck-title').className = 'result-title err-color';
-    document.getElementById('ck-title').textContent = 'Lỗi kết nối';
-    document.getElementById('ck-body').innerHTML = '<div class="result-err-msg">Không thể kết nối máy chủ.</div>';
-  }
-  btn.disabled = false;
-  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Kiểm tra ngay';
-  document.getElementById('ck-modal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeCkModal(){
-  document.getElementById('ck-modal').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-// ── History modal ─────────────────────────────────────────────────────────────
-var _histLoaded = false;
-
-function openHistory(){
-  var modal = document.getElementById('hist-modal');
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  if(!_histLoaded) loadHistory();
-}
-
-function closeHistory(){
-  var modal = document.getElementById('hist-modal');
-  modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function openVideoModal(){
-  var bg=document.getElementById('video-modal-bg');
-  if(bg){bg.classList.add('open');var v=document.getElementById('guide-video');if(v){v.load();v.play().catch(function(){});}}
-}
-function closeVideoModal(e){
-  if(e && e.currentTarget===document.getElementById('video-modal-bg') && e.target!==document.getElementById('video-modal-bg')) return;
-  var bg=document.getElementById('video-modal-bg');
-  if(bg){bg.classList.remove('open');var v=document.getElementById('guide-video');if(v){v.pause();v.currentTime=0;}}
-}
-
-function backdropClose(e){
-  if(e.target === document.getElementById('hist-modal') || e.target.classList.contains('hist-backdrop')){
-    closeHistory();
-  }
-}
-
-async function loadHistory(){
-  if(!_hwid){ return; }
-  var empty = document.getElementById('hist-empty');
-  try{
-    var r = await fetch('/key-history?hwid=' + encodeURIComponent(_hwid));
-    var d = await r.json();
-    _histLoaded = true;
-    renderHistory(d.keys || []);
-  } catch(e){
-    if(empty) empty.textContent = 'Không thể tải lịch sử.';
-  }
-}
-
-function copyKey(btn, key){
-  navigator.clipboard.writeText(key).then(function(){
-    var old = btn.innerHTML;
-    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22d3a0" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
-    btn.style.color = '#22d3a0';
-    setTimeout(function(){ btn.innerHTML = old; btn.style.color = ''; }, 1500);
-  });
-}
-
-function renderHistory(keys){
-  var body = document.getElementById('hist-body');
-  if(!keys || keys.length === 0){
-    body.innerHTML = '<div class="hist-empty">Chưa có lịch sử key nào trên thiết bị này.</div>';
-    return;
-  }
-  body.innerHTML = keys.map(function(k, i){
-    var isExpired = k.expired;
-    var fullKey = k.key || '—';
-    var keyId = 'hist-key-'+i;
-    var badge = isExpired
-      ? '<span class="hist-badge expired">● Hết hạn</span>'
-      : '<span class="hist-badge active">● Còn hạn</span>';
-    var expLine = isExpired
-      ? '<div class="hist-exp">Đã hết hạn · HH: '+_esc(k.expires)+'</div>'
-      : '<div class="hist-exp">Còn '+_esc(k.remaining)+' · HH: '+_esc(k.expires)+'</div>';
-    var copyBtn = '<button class="hist-copy-btn" id="'+keyId+'-copy" onclick="histCopyKey(this,\''+_esc(fullKey)+'\')">'
-      +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
-      +' SAO CHÉP</button>';
-    var ipBtn = '<button class="hist-ip-btn" id="'+keyId+'-ip" onclick="histUpdateIp(this,\''+_esc(fullKey)+'\')">'
-      +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>'
-      +' CẬP NHẬT IP</button>';
-    return '<div class="hist-item">'
-      +'<div class="hist-item-header">'
-        +'<span class="hist-item-label">KEY #'+(i+1)+'</span>'
-        +badge
-      +'</div>'
-      +'<div class="hist-key-box"><div class="hist-key">'+_esc(fullKey)+'</div></div>'
-      +expLine
-      +'<div class="hist-actions">'+copyBtn+ipBtn+'</div>'
-      +'</div>';
-  }).join('');
-}
-
-function histCopyKey(btn, key){
-  navigator.clipboard.writeText(key).then(function(){
-    var old = btn.innerHTML;
-    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22d3a0" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> ĐÃ SAO CHÉP';
-    btn.style.color = '#22d3a0';
-    setTimeout(function(){ btn.innerHTML = old; btn.style.color = ''; }, 1800);
-  });
-}
-
-async function histUpdateIp(btn, key){
-  btn.disabled = true;
-  var old = btn.innerHTML;
-  btn.innerHTML = '⟳ Đang cập nhật…';
-  try{
-    var r1 = await fetch('/my-ip');
-    var d1 = await r1.json();
-    if(!d1.ip){ btn.innerHTML = '✗ Không lấy được IP'; setTimeout(function(){ btn.innerHTML=old; btn.disabled=false; },2000); return; }
-    var r2 = await fetch('/update-ip',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({hwid:_hwid, key:key, ip:d1.ip})});
-    var d2 = await r2.json();
-    if(d2.ok){
-      btn.innerHTML = '✓ Đã cập nhật IP';
-      btn.style.color = '#22d3a0';
-      setTimeout(function(){ btn.innerHTML=old; btn.style.color=''; btn.disabled=false; },2000);
-    } else {
-      btn.innerHTML = '✗ '+(d2.msg||'Lỗi');
-      setTimeout(function(){ btn.innerHTML=old; btn.disabled=false; },2000);
-    }
-  }catch(e){
-    btn.innerHTML = '✗ Lỗi kết nối';
-    setTimeout(function(){ btn.innerHTML=old; btn.disabled=false; },2000);
-  }
-}
-
-var _activated = false;
-
-function iosClick(e){
-  if(_activated) return; // đã kích hoạt → cho href chạy bình thường
+formEl.addEventListener('submit', async (e)=>{
   e.preventDefault();
-
-  var inp = document.getElementById('key-inp');
-  var hasKey = inp && inp.value.trim().length > 0;
-  var warn = document.getElementById('ios-warn');
-  var warnTxt = warn.querySelector('span');
-
-  // Message tùy theo trạng thái
-  if(hasKey){
-    warn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" style="vertical-align:middle;margin-right:5px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
-      + 'Bấm nút <b>Kích Hoạt Ngay</b> để kích hoạt key trước!';
-    // Highlight nút kích hoạt
-    var btnAct = document.getElementById('btn-act');
-    btnAct.style.boxShadow = '0 0 0 3px rgba(251,191,36,.4), 0 8px 28px rgba(139,92,246,.45)';
-    setTimeout(function(){ btnAct.style.boxShadow = ''; }, 2000);
-  } else {
-    warn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" style="vertical-align:middle;margin-right:5px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
-      + 'Vui lòng dán key vào ô bên trên rồi bấm <b>Kích Hoạt Ngay</b>!';
-    // Focus ô key
-    if(inp){ inp.focus(); }
-  }
-
-  warn.classList.add('show');
-  // Shake nút iOS
-  var btn = document.getElementById('btn-ios');
-  btn.style.animation = 'shake .35s ease';
-  btn.addEventListener('animationend', function(){ btn.style.animation=''; }, {once:true});
-  // Tự ẩn sau 3.5 giây
-  setTimeout(function(){ warn.classList.remove('show'); }, 3500);
-}
-
-// Enter key
-document.addEventListener('keydown', function(e){
-  if(e.key==='Enter' && document.activeElement.id !== 'chat-inp') doActivate();
-});
-
-// ── CHAT ──────────────────────────────────────────────────────────────────────
-var _chatOpen      = false;
-var _chatTimer     = null;
-var _chatInited    = false;
-var _chatRendered  = {}; // dedup: message id → true
-var _chatPrevTimer = null;
-// Restore từ localStorage để unread badge và lastId không mất khi reload
-var _chatLastId    = parseInt(localStorage.getItem('chat_lastid')||'0');
-var _chatUnreadN   = parseInt(localStorage.getItem('chat_unread')||'0');
-var _chatPollCursor = 0; // always fetch from 0 on page load to restore full history
-var _chatFirstLoad = true; // true until first poll completes
-
-var _AVATAR_COLORS = [
-  ['#7c3aed','#4338ca'],['#0ea5e9','#0369a1'],['#10b981','#047857'],
-  ['#f59e0b','#b45309'],['#ef4444','#991b1b'],['#8b5cf6','#6d28d9'],
-  ['#ec4899','#be185d'],['#14b8a6','#0f766e']
-];
-function _chatAvatarColor(hwid){
-  var idx=0; for(var i=0;i<hwid.length;i++) idx=(idx+hwid.charCodeAt(i))%_AVATAR_COLORS.length;
-  return _AVATAR_COLORS[idx];
-}
-function _chatName(hwid){ return 'Khách_'+(hwid&&hwid.length>=4?hwid.slice(-4):'????'); }
-
-function toggleChat(){
-  _chatOpen = !_chatOpen;
-  document.getElementById('chat-panel').classList.toggle('open', _chatOpen);
-  var fab = document.getElementById('chat-fab');
-  fab.style.opacity = _chatOpen ? '0' : '';
-  fab.style.pointerEvents = _chatOpen ? 'none' : '';
-  if(_chatOpen){
-    // Khoá scroll body khi chat mở, tránh iOS scroll nhầm khi keyboard lên
-    window.scrollTo(0, 0);
-    document.body.style.overflow = 'hidden';
-    _chatUnreadN = 0;
-    localStorage.removeItem('chat_unread');
-    _updateUnread();
-    var prev=document.getElementById('chat-preview');
-    if(prev) prev.classList.remove('show');
-    if(_chatPrevTimer){ clearTimeout(_chatPrevTimer); _chatPrevTimer=null; }
-    if(!_chatInited){ _chatInited=true; _chatPoll(); }
-    setTimeout(function(){ _chatScrollBottom(false); document.getElementById('chat-inp').focus(); },150);
-  } else {
-    // Mở khoá scroll, về đầu trang
-    document.body.style.overflow = '';
-    document.getElementById('chat-inp').blur();
-    window.scrollTo(0, 0);
-  }
-}
-
-// Khi keyboard hiện/ẩn trên mobile: giữ trang ở đầu
-(function(){
-  var inp = document.getElementById('chat-inp');
-  inp.addEventListener('focus', function(){
-    setTimeout(function(){ window.scrollTo(0,0); }, 50);
-    setTimeout(function(){ window.scrollTo(0,0); }, 350);
-  });
-  inp.addEventListener('blur', function(){
-    setTimeout(function(){ window.scrollTo(0,0); }, 150);
-  });
-})();
-
-
-function _updateUnread(){
-  var el = document.getElementById('chat-unread');
-  if(_chatUnreadN>0 && !_chatOpen){
-    el.textContent = _chatUnreadN>99?'99+':_chatUnreadN;
-    el.classList.add('show');
-    localStorage.setItem('chat_unread', _chatUnreadN);
-  } else {
-    el.classList.remove('show');
-    localStorage.removeItem('chat_unread');
-  }
-}
-
-function showChatPreview(name, text){
-  if(_chatOpen) return;
-  var el   = document.getElementById('chat-preview');
-  var eName = document.getElementById('chat-preview-name');
-  var eText = document.getElementById('chat-preview-text');
-  if(!el) return;
-  eName.textContent = name;
-  eText.textContent = text.length>40 ? text.slice(0,40)+'…' : text;
-  // Reset nếu đang hiện
-  if(_chatPrevTimer){ clearTimeout(_chatPrevTimer); el.classList.remove('show'); }
-  requestAnimationFrame(function(){
-    requestAnimationFrame(function(){
-      el.classList.add('show');
-      _chatPrevTimer = setTimeout(function(){
-        el.classList.remove('show');
-        _chatPrevTimer = null;
-      }, 3500);
-    });
-  });
-}
-
-function _chatScrollBottom(smooth){
-  var el = document.getElementById('chat-msgs');
-  el.scrollTo({top:el.scrollHeight, behavior:smooth?'smooth':'auto'});
-  document.getElementById('chat-scroll-btn').style.display='none';
-}
-(function(){
-  var _scrollTimer=null;
-  document.addEventListener('DOMContentLoaded',function(){
-    var el=document.getElementById('chat-msgs');
-    var btn=document.getElementById('chat-scroll-btn');
-    if(!el||!btn) return;
-    el.addEventListener('scroll',function(){
-      clearTimeout(_scrollTimer);
-      _scrollTimer=setTimeout(function(){
-        var distFromBottom=el.scrollHeight-el.scrollTop-el.clientHeight;
-        btn.style.display=distFromBottom>120?'flex':'none';
-      },80);
-    });
-  });
-})();
-
-// ── CHAT CONTEXT MENU & REPLY ────────────────────────────────────────────────
-var _ctxMsg = null, _replyTo = null;
-
-function _showCtxMenu(m, el){
-  _ctxMsg = m;
-  var menu = document.getElementById('chat-ctx-menu');
-  var rect = el.getBoundingClientRect();
-  var mW=140, mH=46;
-  var x = rect.left, y = rect.top - mH - 6;
-  if(y < 8) y = rect.bottom + 6;
-  if(x + mW > window.innerWidth - 8) x = window.innerWidth - mW - 8;
-  menu.style.left = x+'px'; menu.style.top = y+'px';
-  menu.classList.add('open');
-}
-function _hideCtxMenu(){
-  document.getElementById('chat-ctx-menu').classList.remove('open');
-  _ctxMsg = null;
-}
-function _doReply(){
-  if(!_ctxMsg) return;
-  _replyTo = {
-    name: _ctxMsg.name || _chatName(_ctxMsg.hwid),
-    text: _ctxMsg.text || (_ctxMsg.image ? '[Hình ảnh]' : ''),
-    hwid: _ctxMsg.hwid || ''
-  };
-  document.getElementById('chat-reply-bar-name').textContent = _replyTo.name;
-  document.getElementById('chat-reply-bar-text').textContent = _replyTo.text;
-  document.getElementById('chat-reply-bar').classList.add('show');
-  _hideCtxMenu();
-  document.getElementById('chat-inp').focus();
-}
-function _clearReply(){
-  _replyTo = null;
-  document.getElementById('chat-reply-bar').classList.remove('show');
-}
-document.addEventListener('click', function(e){
-  var m = document.getElementById('chat-ctx-menu');
-  if(m.classList.contains('open') && !m.contains(e.target)) _hideCtxMenu();
-});
-
-function _chatRenderMsgs(msgs, isInitial){
-  if(!msgs||!msgs.length) return;
-  var container = document.getElementById('chat-msgs');
-  var empty = document.getElementById('chat-empty');
-  if(empty) empty.remove();
-  var atBottom = container.scrollHeight-container.scrollTop-container.clientHeight < 70;
-  var lastTime = '';
-  msgs.forEach(function(m){
-    if(_chatRendered[m.id]) return;
-    _chatRendered[m.id] = true;
-    var isOwn  = (m.hwid === _hwid);
-    var isAdmin = !!m.is_admin;
-    var name   = m.name || _chatName(m.hwid);
-    var clrs   = _chatAvatarColor(m.hwid);
-    var init   = name.slice(-2).toUpperCase();
-
-    if(m.time && m.time !== lastTime){
-      var sep=document.createElement('div');
-      sep.className='chat-time-sep'; sep.textContent=m.time;
-      container.appendChild(sep);
-      lastTime = m.time;
+  const key = licenseInput.value.trim();
+  if(!key) { showPopup('🌸 Nhập key vào nha!', true); return; }
+  if(!currentIP) { showPopup('📡 Không lấy được IP', true); return; }
+  if(!currentDeviceId) { showPopup('📱 Không lấy được Device', true); return; }
+  btnSubmit.disabled = true;
+  try {
+    const body = { ip: currentIP, key, device_id: currentDeviceId };
+    const r = await fetch('/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+    const d = await r.json();
+    if(r.ok) {
+      saveKey(key);
+      showPopup('✨ Thành công rồi nè! ✨', false);
+      loadKeyStatus(key);
+    } else {
+      showPopup(d.message || '💔 Key không đúng', true);
     }
-
-    var div=document.createElement('div');
-    div.className='chat-msg '+(isOwn?'own':'other')+(isAdmin?' admin':'');
-
-    var avatarUrl = isAdmin ? 'https://i.imgur.com/EZ06qOK.jpg' : (m.avatar||'');
-    var avatarHtml = isOwn?'':
-      (isAdmin
-        ?'<div class="chat-avatar-admin-wrap"><img class="chat-avatar chat-avatar-img" src="'+_esc(avatarUrl)+'" alt="admin"/></div>'
-        :(avatarUrl
-          ?'<img class="chat-avatar chat-avatar-img" src="'+_esc(avatarUrl)+'" alt="'+_esc(init)+'"/>'
-          :'<div class="chat-avatar" style="background:linear-gradient(135deg,'+clrs[0]+','+clrs[1]+')">'
-            +_esc(init)+'</div>'));
-
-    var quoteHtml = '';
-    if(m.reply_to){
-      var rtText = m.reply_to.text || '[Hình ảnh]';
-      quoteHtml = '<div class="chat-quote">'
-        +'<div class="chat-quote-name">'+_esc(m.reply_to.name)+'</div>'
-        +'<div class="chat-quote-text">'+_esc(rtText)+'</div>'
-        +'</div>';
-    }
-
-    var bubbleHtml = m.image
-      ? quoteHtml+'<div class="chat-bubble chat-img-bubble"><img class="chat-img" src="'+_esc(m.image)+'" loading="lazy" onclick="openLightbox(this.src)"/></div>'
-      : '<div class="chat-bubble">'+quoteHtml+_esc(m.text)+'</div>';
-
-    var nameHtml = isOwn ? '' :
-      (isAdmin
-        ? '<span class="chat-admin-name">'+_esc(name)+'</span>'
-        : '<div class="chat-sender">'+_esc(name)+'</div>');
-
-    div.innerHTML = avatarHtml
-      +'<div class="chat-bubble-wrap">'
-        +nameHtml
-        +bubbleHtml
-        +'<div class="chat-btime">'+_esc(m.time||'')+'</div>'
-      +'</div>';
-
-    // Context menu: click (mobile tap) hoặc chuột phải (desktop)
-    var bubble = div.querySelector('.chat-bubble, .chat-img-bubble');
-    if(bubble){
-      var mSnap = {hwid:m.hwid, name:name, text:m.text||'', image:m.image||''};
-      bubble.addEventListener('click', function(e){
-        e.stopPropagation(); _showCtxMenu(mSnap, bubble);
-      });
-      bubble.addEventListener('contextmenu', function(e){
-        e.preventDefault(); _showCtxMenu(mSnap, bubble);
-      });
-    }
-
-    container.appendChild(div);
-  });
-
-  if(atBottom) _chatScrollBottom(true);
-
-  // Tin mới (không phải load lần đầu): phát sound + đếm unread + preview
-  if(!isInitial){
-    var hasOther = msgs.some(function(m){ return m.hwid !== _hwid; });
-    if(hasOther) _playChatSound();
-  }
-
-  if(!_chatOpen && !isInitial){
-    _chatUnreadN += msgs.length;
-    _updateUnread();
-    var lastMsg = msgs[msgs.length-1];
-    if(lastMsg) showChatPreview(lastMsg.name||_chatName(lastMsg.hwid), lastMsg.text);
-  }
-}
-
-async function _updatePinBar(pinned){
-  var bar=document.getElementById('chat-pin-bar');
-  var txt=document.getElementById('chat-pin-text');
-  if(!bar||!txt) return;
-  if(pinned){bar.classList.add('show');txt.textContent=pinned;}
-  else{bar.classList.remove('show');txt.textContent='';}
-}
-function scrollToPinned(){
-  var bar=document.getElementById('chat-pin-bar');
-  if(bar) bar.scrollIntoView({behavior:'smooth'});
-}
-async function sendChat(){
-  var inp = document.getElementById('chat-inp');
-  var text = inp.value.trim();
-  if(!text || !_hwid) return;
-  inp.value='';
-  var btn=document.getElementById('chat-send');
-  btn.disabled=true;
-  try{
-    var payload={hwid:_hwid,text:text,avatar:_chatMyAvatar||'',name:_chatCustomName||''};
-    if(_replyTo) payload.reply_to=_replyTo;
-    var r=await fetch('/chat/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    _clearReply();
-    var d=await r.json();
-    if(d.banned===true){
-      var notice=document.getElementById('chat-banned-notice');
-      if(!notice){
-        notice=document.createElement('div');
-        notice.id='chat-banned-notice';
-        notice.style.cssText='text-align:center;padding:10px 8px;font-size:.78rem;color:#f87171;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px';
-        notice.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>Bạn đã bị cấm khỏi chat cộng đồng';
-        var wrap=document.getElementById('chat-inp-wrap');
-        if(wrap) wrap.parentNode.insertBefore(notice, wrap);
-        if(wrap) wrap.style.display='none';
-      }
-    } else if(d.banned_ok!==undefined){
-      var fb=document.createElement('div');
-      fb.style.cssText='text-align:center;font-size:.74rem;padding:6px 0;color:'+(d.banned_ok?'#f87171':'#4ade80')+';font-weight:700;';
-      fb.textContent=d.banned_ok?('🚫 Đã ban: '+d.target):('✅ Đã unban: '+d.target);
-      document.getElementById('chat-msgs').appendChild(fb);
-      _chatScrollBottom(true);
-    } else if(d.cam_locked!==undefined){
-      _chatIsAdmin=true;
-      _updateChatLock(d.cam_locked);
-      var fb=document.createElement('div');
-      fb.style.cssText='text-align:center;font-size:.74rem;padding:6px 0;color:'+(d.cam_locked?'#f87171':'#4ade80')+';font-weight:700;';
-      fb.innerHTML=d.cam_locked?'<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>Admin đã TẮT chat cộng đồng':'<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Admin đã BẬT chat cộng đồng';
-      document.getElementById('chat-msgs').appendChild(fb);
-      _chatScrollBottom(true);
-    } else if(d.admin){
-      var fb=document.createElement('div');
-      fb.style.cssText='text-align:center;font-size:.74rem;padding:6px 0;color:#ffd700;font-weight:700;';
-      fb.textContent='★ Bạn đã trở thành Admin Server CheatiOSVip';
-      document.getElementById('chat-msgs').appendChild(fb);
-      _chatScrollBottom(true);
-    } else if(d.cleared){
-      var container=document.getElementById('chat-msgs');
-      container.innerHTML='<div class="chat-empty-msg" id="chat-empty">Chưa có tin nhắn nào. Hãy là người đầu tiên!</div>';
-      _chatLastId=0; _chatUnreadN=0; _chatPollCursor=0; _chatRendered={};
-      localStorage.removeItem('chat_lastid');
-      localStorage.removeItem('chat_unread');
-      _updateUnread();
-    } else if(d.ok&&d.msg){
-      _chatRenderMsgs([d.msg]);
-      _chatLastId=Math.max(_chatLastId,d.msg.id);
-      _chatPollCursor=Math.max(_chatPollCursor,d.msg.id);
-    }
-  }catch(e){}
-  btn.disabled=false;
-  inp.focus();
-}
-
-async function _chatPoll(){
-  try{
-    var r=await fetch('/chat/messages?after='+_chatPollCursor);
-    var d=await r.json();
-    if(typeof d.pinned !== "undefined") _updatePinBar(d.pinned);
-    if(d.ok&&d.messages&&d.messages.length){
-      _chatRenderMsgs(d.messages, _chatFirstLoad);
-      d.messages.forEach(function(m){
-        _chatPollCursor=Math.max(_chatPollCursor,m.id);
-        _chatLastId=Math.max(_chatLastId,m.id);
-      });
-      localStorage.setItem('chat_lastid', _chatLastId);
-    }
-    if(_chatFirstLoad) _chatFirstLoad=false;
-    if(d.online!=null){
-      document.getElementById('chat-sub').textContent='● '+d.online+' thành viên trực tuyến';
-    }
-    if(d.chat_locked!==undefined) _updateChatLock(d.chat_locked);
-  }catch(e){}
-  _chatTimer=setTimeout(_chatPoll,2500);
-}
-var _chatIsAdmin=false;
-function _updateChatLock(locked){
-  var wrap=document.getElementById('chat-inp-wrap');
-  var notice=document.getElementById('chat-lock-notice');
-  if(locked&&!_chatIsAdmin){
-    if(wrap) wrap.style.display='none';
-    if(notice) notice.style.display='block';
-  } else {
-    if(wrap) wrap.style.display='';
-    if(notice) notice.style.display='none';
-  }
-}
-
-// ── CHAT SOUND ───────────────────────────────────────────────────────────────
-var _sndEl = null, _sndReady = false;
-
-function _initSound(){
-  if(_sndEl) return;
-  var sr=44100, total=0.42, n=Math.ceil(sr*total);
-  var ab=new ArrayBuffer(44+n*2), dv=new DataView(ab);
-  var wr=function(o,s){ for(var i=0;i<s.length;i++) dv.setUint8(o+i,s.charCodeAt(i)); };
-  wr(0,'RIFF'); dv.setUint32(4,36+n*2,true); wr(8,'WAVEfmt ');
-  dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,1,true);
-  dv.setUint32(24,sr,true); dv.setUint32(28,sr*2,true);
-  dv.setUint16(32,2,true); dv.setUint16(34,16,true); wr(36,'data');
-  dv.setUint32(40,n*2,true);
-  var ph1=0,ph2=0;
-  for(var i=0;i<n;i++){
-    var t=i/sr,s=0;
-    if(t<=0.22){var f1=t<0.08?880*Math.pow(1320/880,t/0.08):1320;ph1+=2*Math.PI*f1/sr;var g1=t<0.01?0.25*(t/0.01):0.25*Math.pow(0.001/0.25,(t-0.01)/0.21);s+=Math.sin(ph1)*g1;}
-    if(t>=0.12&&t<=0.38){var t2=t-0.12;var f2=t2<0.10?1320*Math.pow(1760/1320,t2/0.10):1760;ph2+=2*Math.PI*f2/sr;var g2=t2<0.02?0.18*(t2/0.02):0.18*Math.pow(0.001/0.18,(t2-0.02)/0.24);s+=Math.sin(ph2)*g2;}
-    dv.setInt16(44+i*2,Math.round(Math.max(-1,Math.min(1,s))*32767),true);
-  }
-  _sndEl=new Audio(URL.createObjectURL(new Blob([ab],{type:'audio/wav'})));
-  _sndEl.preload='auto';
-}
-// Khởi tạo WAV sớm (sau 800ms) để không block lần tương tác đầu
-setTimeout(_initSound, 800);
-
-// Unlock 1 lần duy nhất trong gesture — <audio> không cần unlock lại sau đó
-function _unlockAudio(){
-  document.removeEventListener('touchend', _unlockAudio);
-  document.removeEventListener('click',    _unlockAudio);
-  if(!_sndEl) _initSound();
-  if(!_sndEl || _sndReady) return;
-  _sndEl.volume=0;
-  var p=_sndEl.play();
-  if(p) p.then(function(){ _sndEl.pause(); _sndEl.currentTime=0; _sndEl.volume=1; _sndReady=true; }).catch(function(){});
-}
-document.addEventListener('touchend', _unlockAudio, {passive:true});
-document.addEventListener('click',    _unlockAudio, {passive:true});
-
-function _playChatSound(){
-  if(!_sndEl) return;
-  _sndEl.currentTime=0; _sndEl.volume=1;
-  var p=_sndEl.play(); if(p) p.catch(function(){});
-}
-
-// ── EMOJI PICKER ────────────────────────────────────────────────────────────
-(function buildEmojiPicker(){
-  var picker = document.getElementById('emoji-picker');
-  if(!picker) return;
-  var raw = picker.textContent;
-  var emojis = Array.from(raw.matchAll(/\p{Emoji_Presentation}|\p{Extended_Pictographic}/gu)).map(function(m){return m[0];});
-  picker.innerHTML = '';
-  emojis.forEach(function(em){
-    var btn=document.createElement('button');
-    btn.className='ep-btn'; btn.textContent=em;
-    btn.onclick=function(e){ e.stopPropagation(); insertEmoji(em); };
-    picker.appendChild(btn);
-  });
-})();
-
-var _emojiOpen=false;
-function toggleEmojiPicker(e){
-  e.stopPropagation();
-  _emojiOpen=!_emojiOpen;
-  document.getElementById('emoji-picker').classList.toggle('open',_emojiOpen);
-}
-function insertEmoji(em){
-  var inp=document.getElementById('chat-inp');
-  var s=inp.selectionStart,end=inp.selectionEnd,v=inp.value;
-  inp.value=v.slice(0,s)+em+v.slice(end);
-  inp.selectionStart=inp.selectionEnd=s+em.length;
-  inp.focus();
-}
-document.addEventListener('click',function(e){
-  if(_emojiOpen && !e.target.closest('.emoji-picker-wrap')){
-    _emojiOpen=false;
-    var p=document.getElementById('emoji-picker');
-    if(p) p.classList.remove('open');
+  } catch(err) {
+    showPopup('💔 Key Sai', true);
+  } finally {
+    btnSubmit.disabled = false;
   }
 });
-
-// ── IMAGE / AVATAR ────────────────────────────────────────────────────────────
-var _chatMyAvatar='';
-var _pendingImgFile=null;
-
-// ── Chat rename ───────────────────────────────────────────────────────────────
-var _chatCustomName = localStorage.getItem('chat_custom_name') || '';
-function toggleRenamePopup(){
-  var popup = document.getElementById('chat-rename-popup');
-  var inp   = document.getElementById('chat-rename-inp');
-  if(popup.style.display === 'none'){
-    inp.value = _chatCustomName;
-    popup.style.display = 'flex';
-    setTimeout(function(){ inp.focus(); inp.select(); }, 50);
-  } else {
-    popup.style.display = 'none';
-  }
-}
-function saveChatName(){
-  var inp = document.getElementById('chat-rename-inp');
-  var name = inp.value.trim().replace(/[<>"']/g,'').slice(0,20);
-  _chatCustomName = name;
-  if(name) localStorage.setItem('chat_custom_name', name);
-  else localStorage.removeItem('chat_custom_name');
-  document.getElementById('chat-rename-popup').style.display = 'none';
-  // Cập nhật label nút
-  var btn = document.getElementById('chat-rename-btn');
-  if(btn){ btn.childNodes[btn.childNodes.length-1].textContent = name ? name : 'Đổi tên'; }
-}
-// Đóng popup khi click ngoài
-document.addEventListener('click', function(e){
-  var popup = document.getElementById('chat-rename-popup');
-  var btn   = document.getElementById('chat-rename-btn');
-  if(popup && popup.style.display !== 'none' && !popup.contains(e.target) && !btn.contains(e.target)){
-    popup.style.display = 'none';
-  }
-});
-
-function _loadMyAvatar(){ _chatMyAvatar=(_hwid&&localStorage.getItem('chat_avatar_'+_hwid))||''; }
-
-function onChatImgSelected(input){
-  var file=input.files[0]; input.value='';
-  if(!file||!_hwid||!file.type.startsWith('image/')) return;
-  _pendingImgFile=file;
-  if(!_chatMyAvatar){
-    document.getElementById('chat-ic-modal').classList.add('open');
-  } else {
-    _sendChatImageFile(file);
-  }
-}
-function closeChatImgChoice(){
-  document.getElementById('chat-ic-modal').classList.remove('open');
-  _pendingImgFile=null;
-}
-function chooseSetAvatar(){
-  document.getElementById('chat-ic-modal').classList.remove('open');
-  var f=_pendingImgFile; _pendingImgFile=null;
-  if(f) _uploadAvatar(f);
-}
-function chooseSendImg(){
-  document.getElementById('chat-ic-modal').classList.remove('open');
-  var f=_pendingImgFile; _pendingImgFile=null;
-  if(f) _sendChatImageFile(f);
-}
-
-function _compressImg(file,maxPx,q,cb){
-  var rd=new FileReader();
-  rd.onload=function(ev){
-    var img=new Image();
-    img.onload=function(){
-      var w=img.width,h=img.height;
-      if(w>maxPx){h=Math.round(h*maxPx/w);w=maxPx;}
-      if(h>maxPx){w=Math.round(w*maxPx/h);h=maxPx;}
-      var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
-      cv.getContext('2d').drawImage(img,0,0,w,h);
-      cb(cv.toDataURL('image/jpeg',q));
-    };
-    img.src=ev.target.result;
-  };
-  rd.readAsDataURL(file);
-}
-
-function _uploadAvatar(file){
-  var rd=new FileReader();
-  rd.onload=function(ev){
-    var img=new Image();
-    img.onload=function(){
-      var SIZE=220,s=Math.min(img.width,img.height);
-      var sx=(img.width-s)/2,sy=(img.height-s)/2;
-      var cv=document.createElement('canvas'); cv.width=SIZE; cv.height=SIZE;
-      cv.getContext('2d').drawImage(img,sx,sy,s,s,0,0,SIZE,SIZE);
-      var dataUrl=cv.toDataURL('image/jpeg',0.88);
-      fetch('/chat/upload',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({hwid:_hwid,data:dataUrl,is_avatar:true})})
-      .then(function(r){return r.json();})
-      .then(function(d){
-        if(d.ok){ _chatMyAvatar=d.url; localStorage.setItem('chat_avatar_'+_hwid,d.url); }
-      }).catch(function(){});
-    };
-    img.src=ev.target.result;
-  };
-  rd.readAsDataURL(file);
-}
-
-function _sendChatImageFile(file){
-  if(file.size > 10*1024*1024){
-    alert('Ảnh quá lớn (tối đa 10MB). Vui lòng chọn ảnh nhỏ hơn.');
-    return;
-  }
-  var container=document.getElementById('chat-msgs');
-  var empty=document.getElementById('chat-empty'); if(empty) empty.remove();
-  var ph=document.createElement('div'); ph.className='chat-msg own';
-  ph.innerHTML='<div class="chat-bubble-wrap"><div class="chat-bubble chat-img-bubble"><div class="chat-img-uploading"><span class="spin">⟳</span>&nbsp;Đang gửi…</div></div></div>';
-  container.appendChild(ph); _chatScrollBottom(true);
-  function _doUpload(dataUrl){
-    fetch('/chat/upload',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({hwid:_hwid,data:dataUrl})})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      ph.remove();
-      if(d.ok){
-        return fetch('/chat/send',{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({hwid:_hwid,text:'',image:d.url,avatar:_chatMyAvatar||'',name:_chatCustomName||''})})
-        .then(function(r2){return r2.json();})
-        .then(function(d2){
-          if(d2.ok&&d2.msg){ _chatRenderMsgs([d2.msg]); _chatLastId=Math.max(_chatLastId,d2.msg.id); _chatPollCursor=Math.max(_chatPollCursor,d2.msg.id); }
-        });
-      }
-    }).catch(function(){ ph.remove(); });
-  }
-  // GIF: đọc thẳng, không qua canvas (canvas phá animation)
-  if(file.type === 'image/gif'){
-    var rd = new FileReader();
-    rd.onload = function(ev){ _doUpload(ev.target.result); };
-    rd.readAsDataURL(file);
-  } else {
-    _compressImg(file, 900, 0.82, _doUpload);
-  }
-}
-
-// ── LIGHTBOX ─────────────────────────────────────────────────────────────────
-function openLightbox(src){
-  document.getElementById('chat-lightbox-img').src=src;
-  document.getElementById('chat-lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeLightbox(){
-  document.getElementById('chat-lightbox').classList.remove('open');
-  document.body.style.overflow='';
-}
-
-// Khởi động chat poll sau khi HWID đã sẵn sàng
-setTimeout(function(){ _loadMyAvatar(); _chatInited=true; _chatPoll(); },2000);
-if(_chatUnreadN>0) _updateUnread();
-
-// Ping để đếm người đang truy cập web (dùng cho "thành viên trực tuyến")
-(function(){
-  function _ping(){ fetch('/ping').catch(function(){}); }
-  _ping();
-  setInterval(_ping, 30000);
-})();
-
-// ── BOT AI ─────────────────────────────────────────────────────────────────
-var _botOpen = false, _botGreeted = false;
-
-function toggleBot(){
-  _botOpen = !_botOpen;
-  document.getElementById('bot-panel').classList.toggle('open', _botOpen);
-  var fab = document.getElementById('bot-fab');
-  fab.style.opacity = _botOpen ? '0' : '';
-  fab.style.pointerEvents = _botOpen ? 'none' : '';
-  if(_botOpen){
-    window.scrollTo(0,0);
-    document.body.style.overflow='hidden';
-    if(!_botGreeted){
-      _botGreeted=true;
-      _botAppend('bot','Xin chào! 👋 Tôi là AI hỗ trợ của ProxyVipFF.\n\nGửi key bản quyền của bạn vào đây, tôi sẽ giúp bạn **reset thiết bị** để có thể kích hoạt lại trên máy mới.\n\n⚠️ Mỗi key chỉ được reset 1 lần mỗi 3 tiếng.');
-    }
-    setTimeout(function(){ document.getElementById('bot-inp').focus(); },150);
-  } else {
-    document.body.style.overflow='';
-    document.getElementById('bot-inp').blur();
-    window.scrollTo(0,0);
-  }
-}
-
-function _botAppend(role, text){
-  var c = document.getElementById('bot-msgs');
-  var wrap = document.createElement('div');
-  wrap.className = 'bot-bubble-wrap ' + role;
-  var inner = '';
-  if(role==='bot') inner += '<div class="bot-label">🤖 AI Hỗ Trợ</div>';
-  inner += '<div class="bot-bubble">'+text.split('\n').map(function(l){return _esc(l).replace(/\*\*(.*?)\*\*/g,'<b>$1</b>');}).join('<br>')+'</div>';
-  wrap.innerHTML = inner;
-  c.appendChild(wrap);
-  c.scrollTop = c.scrollHeight;
-}
-
-function _botShowTyping(){
-  var c = document.getElementById('bot-msgs');
-  var d = document.createElement('div'); d.className='bot-bubble-wrap bot'; d.id='bot-typing';
-  d.innerHTML='<div class="bot-typing"><span></span><span></span><span></span></div>';
-  c.appendChild(d); c.scrollTop=c.scrollHeight;
-}
-function _botHideTyping(){ var d=document.getElementById('bot-typing'); if(d) d.remove(); }
-
-async function sendBot(){
-  var inp=document.getElementById('bot-inp');
-  var msg=inp.value.trim(); if(!msg) return;
-  inp.value='';
-  var btn=document.getElementById('bot-send'); btn.disabled=true;
-  _botAppend('user', msg);
-  _botShowTyping();
-  try{
-    var r=await fetch('/ai-chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({msg:msg,hwid:_hwid})});
-    var d=await r.json();
-    _botHideTyping();
-    _botAppend('bot', d.reply||'Có lỗi xảy ra, thử lại sau.');
-  }catch(e){ _botHideTyping(); _botAppend('bot','❌ Lỗi kết nối, thử lại sau.'); }
-  btn.disabled=false; inp.focus();
-}
-
-// Mobile keyboard handling cho bot input
-(function(){
-  var bi=document.getElementById('bot-inp');
-  bi.addEventListener('focus',function(){ setTimeout(function(){window.scrollTo(0,0);},50); setTimeout(function(){window.scrollTo(0,0);},350); });
-  bi.addEventListener('blur',function(){ setTimeout(function(){window.scrollTo(0,0);},150); });
-})();
-
-// ── Activation toast notifications ─────────────────────────────────────────
-(function(){
-  var _lastActId = 0;
-  var _wrap = document.getElementById('act-toast-wrap');
-
-  var _actTimer = null;
-  function _showActToast(ev){
-    if(_actTimer){ clearTimeout(_actTimer); _actTimer=null; }
-    _wrap.innerHTML = '';
-    var el = document.createElement('div');
-    el.className = 'act-toast';
-    el.innerHTML =
-      '<div class="act-toast-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'+
-      '<div class="act-toast-body">'+
-        '<div class="act-toast-title">&#x1F511; Có người vừa kích hoạt key!</div>'+
-        '<div class="act-toast-key">'+_escT(ev.key)+'</div>'+
-        '<div class="act-toast-dur">Thời hạn: '+_escT(ev.duration)+'</div>'+
-      '</div>';
-    _wrap.appendChild(el);
-    _actTimer = setTimeout(function(){
-      el.classList.add('out');
-      setTimeout(function(){ _wrap.innerHTML=''; _actTimer=null; }, 350);
-    }, 4500);
-  }
-
-  function _escT(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
-
-  var _actInited = false;
-
-  function _pollActs(){
-    fetch('/recent-activations?after='+_lastActId)
-      .then(function(r){ return r.json(); })
-      .then(function(d){
-        if(!d.ok || !d.events) return;
-        if(!_actInited){
-          // Lần đầu: chỉ lấy id mới nhất làm mốc, KHÔNG hiện toast
-          _actInited = true;
-          d.events.forEach(function(ev){
-            if(ev.id > _lastActId) _lastActId = ev.id;
-          });
-          return;
-        }
-        // Từ lần 2 trở đi: chỉ hiện toast cho event mới hơn mốc
-        d.events.forEach(function(ev){
-          if(ev.id > _lastActId){
-            _lastActId = ev.id;
-            _showActToast(ev);
-          }
-        });
-      }).catch(function(){});
-  }
-
-  // Poll ngay khi load (lấy mốc), sau đó mỗi 4s
-  setTimeout(function(){
-    _pollActs();
-    setInterval(_pollActs, 4000);
-  }, 1000);
-})();
-
-// ── DevTools detect → redirect sang trang bẫy ──────────────────────────────
-(function(){
-  var _gone = false;
-  function _trap(){
-    if(_gone) return; _gone = true;
-    window.location.replace('/x-blocked');
-  }
-
-  // Bỏ qua mọi check trên thiết bị mobile/tablet (touch) — Safari iPhone
-  // bị false-positive vì outerHeight - innerHeight > 130 do thanh điều hướng
-  var _isMobile = (navigator.maxTouchPoints > 0) ||
-    /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
-  if(!_isMobile){
-    // ① Kích thước cửa sổ: DevTools docked làm thu hẹp innerWidth/innerHeight
-    //    → redirect NGAY, không cần resume debugger
-    function _szCheck(){
-      if(window.outerWidth  - window.innerWidth  > 130 ||
-         window.outerHeight - window.innerHeight > 130) _trap();
-    }
-    _szCheck();
-    window.addEventListener('resize', _szCheck);
-    setInterval(_szCheck, 400);
-
-    // ② Timing: dành cho DevTools undocked (cửa sổ riêng), redirect khi resume
-    setInterval(function(){
-      var t = performance.now();
-      debugger;
-      if(performance.now() - t > 100) _trap();
-    }, 300);
-
-    // ③ Console getter trick: phát hiện khi DevTools console đang mở
-    try{
-      var _img = new Image();
-      Object.defineProperty(_img, 'id', {get: function(){ _trap(); return ''; }});
-      setInterval(function(){ console.log(_img); console.clear(); }, 800);
-    }catch(e){}
-  }
-})();
-
-// ── Chống F12 / DevTools / chuột phải ──────────────────────────────────────
-(function(){
-  var _secToast = null, _secTimer = null;
-  function _showSecWarn(msg){
-    if(!_secToast){
-      _secToast = document.createElement('div');
-      _secToast.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);z-index:99999;background:rgba(10,10,20,.97);border:1px solid rgba(239,68,68,.45);border-radius:16px;padding:22px 28px;text-align:center;min-width:260px;box-shadow:0 8px 40px rgba(0,0,0,.8);transition:transform .25s,opacity .25s;opacity:0;pointer-events:none;';
-      _secToast.innerHTML='<div style="font-size:2rem;margin-bottom:8px">🚫</div><div style="font-weight:800;font-size:.95rem;color:#f87171;margin-bottom:6px">Hành động bị chặn!</div><div style="font-size:.78rem;color:#cbd5e1;" id="_sec_msg"></div>';
-      document.body.appendChild(_secToast);
-    }
-    _secToast.querySelector('#_sec_msg').textContent = msg;
-    _secToast.style.opacity='1'; _secToast.style.transform='translate(-50%,-50%) scale(1)'; _secToast.style.pointerEvents='none';
-    clearTimeout(_secTimer);
-    _secTimer = setTimeout(function(){
-      _secToast.style.opacity='0'; _secToast.style.transform='translate(-50%,-50%) scale(.9)';
-    }, 2200);
-  }
-
-  document.addEventListener('contextmenu', function(e){
-    e.preventDefault();
-    _showSecWarn('Chuột phải đã bị vô hiệu hóa trên trang này.');
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key==='F12'){ e.preventDefault(); _showSecWarn('Phím F12 đã bị vô hiệu hóa trên trang này.'); return false; }
-    if(e.ctrlKey && e.shiftKey && (e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'||e.key==='C'||e.key==='c')){ e.preventDefault(); _showSecWarn('DevTools đã bị vô hiệu hóa trên trang này.'); return false; }
-    if(e.ctrlKey && (e.key==='U'||e.key==='u')){ e.preventDefault(); _showSecWarn('Xem mã nguồn đã bị vô hiệu hóa trên trang này.'); return false; }
-  });
-})();
-
-// ── Snow effect ─────────────────────────────────────────────────────────────
-(function(){
-  var canvas = document.createElement('canvas');
-  canvas.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99998;';
-  document.body.appendChild(canvas);
-  var ctx = canvas.getContext('2d');
-  var W, H, flakes = [];
-
-  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resize); resize();
-
-  var N = 120;
-  for(var i=0;i<N;i++){
-    flakes.push({
-      x: Math.random()*W,
-      y: Math.random()*H,
-      r: Math.random()*3+1,
-      d: Math.random()*0.8+0.3,
-      drift: Math.random()*0.6-0.3,
-      o: Math.random()*0.5+0.3,
-      t: Math.random()*Math.PI*2
-    });
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    flakes.forEach(function(f){
-      f.t += 0.015;
-      f.x += Math.sin(f.t)*0.5 + f.drift;
-      f.y += f.d;
-      if(f.y > H+10){ f.y=-10; f.x=Math.random()*W; }
-      if(f.x > W+10) f.x=-10;
-      if(f.x < -10)  f.x=W+10;
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
-      ctx.fillStyle='rgba(255,255,255,'+f.o+')';
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
 </script>
-
-<!-- ── PASSWORD: TẠO MẬT KHẨU ── -->
-<div class="pw-modal" id="pw-create-modal">
-  <div class="pw-backdrop" onclick="skipPwCreate()"></div>
-  <div class="pw-sheet">
-    <div class="pw-sheet-handle"></div>
-    <div class="pw-head">
-      <div class="pw-head-icon create"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22d3a0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-      <span class="pw-head-title create">Thiết lập mật khẩu bảo vệ</span>
-    </div>
-    <div class="pw-body">
-      <div class="pw-desc">Mật khẩu này dùng để xác minh chính chủ nếu bạn đổi trình duyệt hoặc thiết bị sau này.</div>
-      <input class="pw-inp" type="password" id="pw-c1" placeholder="Nhập mật khẩu (ít nhất 6 ký tự)" maxlength="50" autocomplete="new-password" onkeydown="if(event.key==='Enter')document.getElementById('pw-c2').focus()">
-      <input class="pw-inp" type="password" id="pw-c2" placeholder="Nhập lại mật khẩu" maxlength="50" autocomplete="new-password" onkeydown="if(event.key==='Enter')doPwCreate()">
-      <button class="pw-btn" id="pw-create-btn" onclick="doPwCreate()">Xác nhận mật khẩu thiết bị</button>
-      <div class="pw-err" id="pw-create-err"></div>
-      <button class="pw-skip" onclick="skipPwCreate()">Bỏ qua (không khuyến nghị)</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── PASSWORD: XÁC MINH THIẾT BỊ MỚI ── -->
-<div class="pw-modal" id="pw-verify-modal">
-  <div class="pw-backdrop" onclick="closePwVerifyModal()"></div>
-  <div class="pw-sheet">
-    <div class="pw-sheet-handle"></div>
-    <div class="pw-head">
-      <div class="pw-head-icon verify" id="pw-verify-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
-      <span class="pw-head-title verify" id="pw-verify-title">Phát hiện thiết bị mới!</span>
-      <button class="result-close" onclick="closePwVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>
-    <!-- View 1: nhập mật khẩu -->
-    <div class="pw-body" id="pw-verify-v1">
-      <div class="pw-desc">Vui lòng nhập mật khẩu để xác minh chính chủ.</div>
-      <input class="pw-inp" type="password" id="pw-v1" placeholder="Nhập mật khẩu để xác minh" maxlength="50" autocomplete="current-password" onkeydown="if(event.key==='Enter')doPwVerify()">
-      <button class="pw-btn" id="pw-verify-btn" onclick="doPwVerify()">Xác nhận mật khẩu thiết bị</button>
-      <div class="pw-err" id="pw-verify-err"></div>
-      <button class="pw-skip" onclick="closePwVerifyModal()">Hủy</button>
-      <div style="text-align:center;margin-top:10px;font-size:.68rem;color:var(--muted)">Quên mật khẩu? Hãy nhắn cho admin &nbsp;<a href="https://t.me/canhioscrack" target="_blank" style="display:inline-flex;align-items:center;gap:4px;background:#229ED9;color:#fff;font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:8px;text-decoration:none;vertical-align:middle"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.014 9.49c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.19 14.447l-2.95-.924c-.642-.204-.655-.642.136-.953l11.526-4.448c.537-.194 1.006.131.66.126z"/></svg>Telegram</a></div>
-    </div>
-  </div>
-</div>
-
-
-<div class="wlc-overlay" id="wlc-overlay"><div class="wlc-box"><img class="wlc-banner" id="wlc-banner" src="" alt="Welcome" loading="eager" onerror="this.style.display='none'"><div class="wlc-body"><div class="wlc-title">Chào mừng đến với Nguyễn Trung</div><div class="wlc-desc">Dịch vụ proxy VIP tốc độ cao cho Free Fire iOS.<br>Kích hoạt key của bạn để bắt đầu trải nghiệm ngay hôm nay!</div><button class="wlc-close" onclick="wlcClose()">Bắt đầu ngay</button><label class="wlc-no-show"><span class="wlc-cb"><input type="checkbox" id="wlc-nochk"><span class="wlc-cb-box"></span></span><span>Không hiện lại hôm nay</span></label></div></div></div>
-<script>(function(){var today=new Date().toISOString().slice(0,10);if(localStorage.getItem("wlc_skip")===today) return;var ov=document.getElementById("wlc-overlay");if(!ov) return;setTimeout(function(){ ov.classList.add("show"); },400);})();function wlcClose(){var ov=document.getElementById("wlc-overlay");if(!ov) return;ov.style.opacity="0";setTimeout(function(){ ov.style.display="none"; },400);var chk=document.getElementById("wlc-nochk");if(chk&&chk.checked){var today=new Date().toISOString().slice(0,10);localStorage.setItem("wlc_skip",today);}}</script>
-</body></html>
+</body>
+</html>
+```
